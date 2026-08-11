@@ -1,0 +1,917 @@
+{% load static %} 
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="{% static 'icon.png' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Member</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+
+<style>
+   *{
+    box-sizing: border-box;
+  }
+
+   body{
+    background-color:#0B0F1A; 
+     padding-top:100px;
+  }
+
+  .home{
+    background-color: black;  
+    color: white;
+    height: auto;
+    margin: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+    position:relative;
+    background-image:
+    linear-gradient(
+      rgba(0,0,0,0.65),
+      rgba(0,0,0,0.65)),
+    url("{% static 'ff.png' %}");
+
+   background-size: cover;
+   background-position: center;
+  }
+
+li a {
+  white-space: wrap;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+li{
+  list-style: none;
+}
+.one {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+  
+}
+
+  .one{
+    padding-top: 30px;
+  }
+  .one{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+
+    display: grid;
+    grid-template-columns: 120px 1fr 120px;
+    align-items: center;
+
+    padding: 25px 40px;
+    background-color: black;
+}
+
+
+a {
+  text-decoration: none;
+  color: white;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.bb {
+  background-color: red; 
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.navbar-brand {
+  margin-right: 20px;
+}
+ol {
+  display: flex;
+  gap: clamp(15px, 3vw, 50px);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+.navbar-brand {
+  margin-right: 60px;
+}
+
+.button {
+  margin-left: 60px;
+}
+
+li a {
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+li a:hover {
+  color: #ff1801;
+}
+
+
+.menu-toggle{
+  display:none;
+  background:none;
+  border:none;
+  cursor:pointer;
+  width:32px;
+  height:26px;
+  padding:0;
+  position:relative;
+  z-index:10001;
+  justify-self:end;
+}
+
+.menu-toggle span{
+  display:block;
+  position:absolute;
+  left:0;
+  width:100%;
+  height:3px;
+  background:white;
+  border-radius:3px;
+  transition:0.3s ease;
+}
+
+.menu-toggle span:nth-child(1){ top:0; }
+.menu-toggle span:nth-child(2){ top:11px; }
+.menu-toggle span:nth-child(3){ top:22px; }
+
+.menu-toggle.active span:nth-child(1){
+  top:11px;
+  transform:rotate(45deg);
+  background:#ff1801;
+}
+.menu-toggle.active span:nth-child(2){
+  opacity:0;
+}
+.menu-toggle.active span:nth-child(3){
+  top:11px;
+  transform:rotate(-45deg);
+  background:#ff1801;
+}
+
+@media (max-width:768px){
+
+.one{
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    justify-content:space-between;
+    padding:15px 20px;
+}
+
+.menu-toggle{
+    display:block;
+}
+
+.navbar-brand,
+.mobile-actions{
+    position:relative;
+    z-index:10002;
+}
+
+.mobile-actions{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+ol{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:0;
+    margin:0;
+    padding:0;
+
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100vh;
+    background:rgba(0,0,0,0.97);
+
+    transform:translateY(-100%);
+    opacity:0;
+    visibility:hidden;
+    transition:transform 0.35s ease, opacity 0.35s ease, visibility 0.35s;
+    z-index:10000;
+}
+
+ol.show{
+    transform:translateY(0);
+    opacity:1;
+    visibility:visible;
+}
+
+ol li{
+    padding:18px 0;
+}
+
+ol li a{
+    font-size:22px;
+}
+
+.button{
+    margin:0;
+}
+
+.button .bb{
+    padding:8px 14px;
+    font-size:14px;
+}
+
+}
+
+
+@media (max-width: 768px){
+
+  .yell{
+    width: 100% !important;
+    height: auto !important;
+    padding: 20px 0 !important;
+  }
+
+  .as{
+    width: 90% !important;
+    max-width: 350px !important;
+  }
+
+  .as img{
+    margin-top: 30px !important;
+  }
+
+  .next{
+    flex-direction: column !important;
+    width: 90% !important;
+    padding: 20px !important;
+    text-align: center !important;
+  }
+
+  .inside{
+    width: 100% !important;
+  }
+
+  .inside h1{
+    font-size: 28px !important;
+  }
+
+  .inside p{
+    font-size: 16px !important;
+    line-height: 1.5 !important;
+  }
+
+  .image{
+    width: 100% !important;
+    margin-top: 40px !important;
+  }
+
+  .dark{
+    width: 100% !important;
+    height: auto !important;
+    padding: 20px 0 !important;
+  }
+
+  .mo{
+    flex-direction: column-reverse !important;
+    width: 90% !important;
+    padding: 20px !important;
+    text-align: center !important;
+  }
+
+  .ima{
+    width: 100% !important;
+    padding-right: 0 !important;
+    margin: 0 !important;
+  }
+
+  .ima img{
+    height: auto !important;
+    margin-left: 0 !important;
+  }
+
+  .in{
+    width: 100% !important;
+  }
+
+  .in h1{
+    font-size: 26px !important;
+    margin-left: 0 !important;
+    margin-top: 10px !important;
+  }
+
+  .in p{
+    font-size: 16px !important;
+    margin-left: 0 !important;
+    margin-top: 15px !important;
+  }
+
+  .bot{
+    margin-left: 0 !important;
+    margin-top: 29px !important;
+  }
+
+}
+
+
+.yell{
+  width: 1510px;
+  height: 400px;
+  background: linear-gradient(
+    90deg,
+    #c89a12 0%,
+    #e0cf18 40%,
+    #ffe629 75%,
+    #fffd7d 100%
+);
+  margin-top: -15px;
+}
+
+.as{
+    position:relative;
+    width:700px;
+    margin:auto;
+    overflow:hidden; 
+}
+
+.as img{
+    width:100%;
+    display:block;
+    margin-top: 80px;
+    border-bottom-left-radius:50px;
+    border-top-right-radius:50px;
+}
+
+.as::after{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    height:200px;
+    z-index:2;
+    border-bottom-left-radius: 50px;
+    background:linear-gradient(
+        to bottom,
+        rgba(5,8,25,0) 0%,
+        rgba(0, 0, 0, 0.752) 60%,
+        #000104 100%
+    );
+}
+.next{
+    width: 90%;
+    max-width: 1500px;
+
+    margin: 50px auto;
+
+    background: #000;
+    border-radius: 18px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 40px;
+
+    box-sizing: border-box;
+}
+
+.inside{
+    width: 45%;
+    color: white;
+}
+
+.inside h1{
+    font-size: 56px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.inside p{
+    font-size: 22px;
+    line-height: 1.7;
+    margin-bottom: 30px;
+}
+
+.inside button{
+    background: transparent;
+    color: white;
+
+    border: 2px solid white;
+    border-radius: 40px;
+
+    padding: 15px 35px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.inside button:hover{
+    background: white;
+    color: black;
+}
+
+.image{
+    width: 48%;
+}
+
+.image img{
+    width: 100%;
+    border-radius: 10px;
+    display: block;
+}
+.dark{
+  width: 1510px;
+  height: 400px;
+  background: linear-gradient(
+    90deg,
+    #1c1a16 0%,
+    #510b0b 40%,
+    #000000 75%,
+    #000000 100%
+);
+  margin-top: -15px;
+}
+
+.mo{
+    width: 90%;
+    max-width: 1500px;
+
+    margin: 50px auto;
+
+    
+    border-radius: 18px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 40px;
+
+    box-sizing: border-box;
+}
+
+.in{
+    width: 45%;
+    color: white;
+}
+
+.in h1{
+    font-size: 46px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    padding-top: 30px;
+    margin-top: -50px;
+    margin-left: -120px;
+}
+
+.in p{
+    font-size: 22px;
+    line-height: 1.7;
+    margin-bottom: 0px;
+    margin-top:50px;
+    margin-left: -120px;
+}
+
+
+.ima{
+    width: 58%;
+    padding-right: 90px;
+    margin: -10px;
+}
+
+.ima img{
+    width: 100%;
+    height: 350px;
+    padding-top: -40px;
+    margin-left: -80px;     
+    display: block;
+}
+.bot{
+    background: #ff0000;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    animation: pulse 2s infinite;
+    margin-left: 490px;
+}
+
+.bot:hover{
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 0 20px #ff0000,
+                0 0 40px #ff0000;
+}
+
+@keyframes pulse{
+    0%{
+        box-shadow: 0 0 0 0 rgba(255,0,0,0.7);
+    }
+    70%{
+        box-shadow: 0 0 0 15px rgba(255,0,0,0);
+    }
+    100%{
+        box-shadow: 0 0 0 0 rgba(255,0,0,0);
+    }
+}
+
+.foot{
+  width: 100%;
+  height: auto;
+  background-color: #1E2230;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  padding: 20px 0;
+  margin-bottom: 20px;
+}
+.co{
+  padding: 20px;
+  font-family: EB Garamond;
+}
+.ll {
+  display:flex;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  text-align: center;
+}
+.ll {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); 
+  gap: 20px;
+  padding: 20px;
+  text-align: center;
+}
+.ll a {
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+
+.ll div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.lu,.pi,.ar,.le,.he,.pu{
+  padding-right: 80px;
+}
+.lu{
+  padding-left: 100px;
+
+}
+
+
+
+
+.middle{
+  width: 100%;
+  height: 230px;
+  background-color:#3A3B42;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  margin-top: -45px;
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 30px;
+  gap: 100px;
+  align-items:center;
+}
+.middle div {
+  flex: 0 0 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.paper{
+  display: flex;
+  margin-bottom:60px;
+}
+
+
+
+
+
+
+@media (max-width: 768px){
+
+  .middle{
+    margin:0%;
+    margin-top: 30px ;
+    padding: 0%;
+  }
+
+  .louis,.nest,.tmobile,.sf{
+   padding-left:20px;
+  }
+ 
+  .paper {
+  margin-bottom:10px;
+}
+
+.paper {
+  display: flex;
+  justify-content:space-between ;
+  align-items: center;
+  width: 100%;
+  padding: 10px 16px;
+}
+.co {
+  margin-bottom: 0px;
+}
+
+
+.co {
+  font-weight: bold;
+  padding: 0 16px;
+  white-space: nowrap;
+  font-size: 16px;
+}
+.lu,.pi,.ar,.he,.le,.pu{
+  padding-left:0px;
+  padding:-0%;
+}
+  .ll {
+    grid-template-columns: repeat(2, 1fr);
+    padding-left: 100px;
+  }
+}
+@media (max-width: 768px) {
+
+  .middle {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .middle div {
+    width: 30%; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+    .middle div:nth-child(4),
+  .middle div:nth-child(5) {
+    width: 45%;
+  }
+}
+
+.paper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  margin-bottom: 10px;
+}
+
+.co {
+   padding: 20px;
+  color: #ADD8E6;
+  font-weight: bold;
+}
+
+#red{
+    width:100%;
+    height:5px;
+    position:relative;
+    overflow:hidden;
+    background:#111;
+}
+
+#red::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-20%;
+    width:20%;
+    height:100%;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        red,
+        white,
+        red,
+        transparent
+    );
+
+    animation:racingline 2s linear infinite;
+    box-shadow:0 0 20px red;
+}
+@keyframes racingline{
+    0%{
+        left:-20%;
+    }
+
+    100%{
+        left:120%;
+    }
+}
+.red-line{
+    width:100%;
+    height:4px;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        red,
+        white,
+        red,
+        transparent
+    );
+    background-size:200% 100%;
+    animation:f1line 3s linear infinite;
+    box-shadow:0 0 10px red;
+    border-radius:10px;
+}
+@keyframes f1line{
+    0%{
+        background-position:200% 0;
+    }
+
+    100%{
+        background-position:-200% 0;
+    }
+}
+@media (max-width:768px) {
+   .img{
+     margin-left: -125px; 
+   }
+
+} 
+
+
+</style>
+
+<body>
+     <div class="home">
+    <nav class="one">
+    <a class="navbar-brand" href="#"><img src="{% static 'formula.png' %}" width="80px"></a>
+      <ol id="navList">
+        <li class="ss"><a href="{% url 'index' %}">Home</a></li>
+        <li class="s"><a href="{% url 'second' %}">Schedule</a></li>
+        <li class="dd"><a href="{% url 'drive' %}">Drivers</a></li>
+        <li class="t"><a href="{% url 'team' %}">Teams</a></li>
+        <li class="mm"><a href="{% url 'membership' %}">F1 Membership</a></li>
+      </ol>
+
+      <div class="mobile-actions">
+      <div class="button" id="navButton">
+
+{% if user.is_authenticated %}
+
+    <a href="{% url 'logout' %}">
+        <button class="bb" type="button">Logout</button>
+    </a>
+
+{% else %}
+
+    <a href="{% url 'login' %}">
+        <button class="bb" type="button">Login</button>
+    </a>
+
+{% endif %}
+
+</div>
+
+<button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
+      </div>
+
+    </nav>
+   </div> 
+
+   <div class="yell">
+    <div class="as">
+    <img src="{% static 'as one.avif' %}" alt="" >
+    </div>
+   </div>
+   <br>
+   <br>
+   <br>
+<div class="next">
+
+    <div class="inside">
+        <h1>Insider Experiences</h1>
+
+        <p>
+            Unlock member-only experiences and behind-the-scenes access.
+            Get invites to exclusive events, on-track and off, and enter
+            competitions that could see you walking the Pit Lane or opening
+            champagne at the podium!
+        </p>
+
+        
+    </div>
+
+    <div class="image">
+        <img src="{% static 'image.jpeg' %}" alt="">
+    </div>
+
+</div>
+
+
+<div class="dark">
+
+  <div class="mo">
+
+    <div class="ima">
+      <img src="{% static 'sub.png' %}" alt="">
+    </div>
+
+    <div class="in">
+        <h1>Join the Ultimate Formula 1 Experience</h1>
+
+      <p>
+        Subscribe today and gain access to exclusive F1 updates, race insights, team news, and championship coverage. Join our growing community of passionate fans and enjoy a premium Formula 1 experience all season long. 
+      </p>
+      <a href="{% url 'subscribe' %}">
+      <button class="bot " type="button">SUBSCRIBE</button>
+      </a>   
+    </div>
+  </div>
+</div>
+<br>
+
+   <div class="red-line"></div>
+<br>
+<div class="foot">
+  <div class="paper">
+    <h2 class="co" style="color:#ADD8E6;">CO-PARTNERS</h2>
+  </div>
+ 
+<div class="ll">
+  <a class="lu" href="https://www.lvmh.com/en"><h3>Lvmh</h3></a>
+  <a class="pi" href="https://www.pirelli.com/tyres/en-ww/motorsport/car/formula-1?utm_source=formula1.com&utm_medium=referral&utm_campaign=ww_motorsport_f1&utm_content=homepage"><h3>Pirelli</h3></a>
+  <a class="ar" href="https://www.aramco.com/"><h3>Aramco</h3></a>
+  <a class="he" href="https://www.heineken.com/in/en/agegateway/?returnUrl=%2fin%2fen%2fhome"><h3>Heineken</h3></a>
+  <a class="le" href="https://www.lenovo.com/in/en/"><h3>Lenovo</h3></a>
+  <a class="pu" href="https://eu.puma.com/de/en/sports/motorsport?utm_source=PP&utm_pricing=OTH&utm_medium=BM&utm_campaign=BM_All_PP_OTH_OTH_BRD_Motorsport_SS23_Formula1_F1-Website_NA_NA&utm_budget=global"><h3>Puma</h3></a>
+</div>
+<div id="red"></div>
+</div>
+
+<div class="middle">
+  <div class="louis"><a href="https://in.louisvuitton.com/eng-in/homepage"><img src="{% static 'lv.png' %}" width="100px" height="auto"></a></div>
+  <div class="nest"><a href="https://www.nestle.com/"><img src="{% static 'ns.png' %}" width="100px" height="100px"></a></div>
+  <div class="tmobile"><a href="https://www.t-mobile.com/?msockid=3653e332c6246f2b3f74f523c7e36e69"><img src="{% static 'tm.webp' %}" width="100px" height="50px"></a></div>
+  <div class="sf"><a href="https://www.salesforce.com/in/?ir=1"><img src="{% static 'sf.png' %}" width="100px" height="100px"></a></div>
+  
+</div>
+
+<script>
+$(document).ready(function () {
+  const $toggle = $('#menuToggle');
+  const $navList = $('#navList');
+
+  $toggle.on('click', function () {
+    $toggle.toggleClass('active');
+    $navList.toggleClass('show');
+    $('body').toggleClass('menu-open');
+  });
+
+  $navList.find('a').on('click', function () {
+    $toggle.removeClass('active');
+    $navList.removeClass('show');
+    $('body').removeClass('menu-open');
+  });
+});
+</script>
+
+</body>
+</html>

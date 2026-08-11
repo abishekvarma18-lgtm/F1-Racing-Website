@@ -1,0 +1,1405 @@
+{% load static %} 
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="{% static 'icon.png' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Schedule</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+
+<style>
+   *{
+    box-sizing: border-box;
+  }
+
+   body{
+    background-color:#0B0F1A; 
+     padding-top:100px;
+  }
+
+  .home{
+    background-color: black;  
+    color: white;
+    height: auto;
+    margin: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+    position:relative;
+    background-image:
+    linear-gradient(
+      rgba(0,0,0,0.65),
+      rgba(0,0,0,0.65)),
+     url("{% static 'ff.png' %}");
+
+   background-size: cover;
+   background-position: center;
+  }
+
+li a {
+  white-space: wrap;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+li{
+  list-style: none;
+}
+.one {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+  
+}
+
+  .one{
+    padding-top: 30px;
+  }
+  .one{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+
+    display: grid;
+    grid-template-columns: 120px 1fr 120px;
+    align-items: center;
+
+    padding: 25px 40px;
+    background-color: black;
+}
+
+
+a {
+  text-decoration: none;
+  color: white;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.bb {
+  background-color: red; 
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+.bb{
+  margin-left: 0px;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.navbar-brand {
+  margin-right: 20px;
+}
+ol {
+  display: flex;
+  gap: clamp(15px, 3vw, 50px);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+.navbar-brand {
+  margin-right: 60px;
+}
+
+.button {
+  margin-left: 60px;
+}
+
+li a {
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+li a:hover {
+  color: #ff1801;
+}
+
+.menu-toggle{
+  display:none;
+  background:none;
+  border:none;
+  cursor:pointer;
+  width:32px;
+  height:26px;
+  padding:0;
+  position:relative;
+  z-index:10001;
+  justify-self:end;
+}
+
+.menu-toggle span{
+  display:block;
+  position:absolute;
+  left:0;
+  width:100%;
+  height:3px;
+  background:white;
+  border-radius:3px;
+  transition:0.3s ease;
+}
+
+.menu-toggle span:nth-child(1){ top:0; }
+.menu-toggle span:nth-child(2){ top:11px; }
+.menu-toggle span:nth-child(3){ top:22px; }
+
+.menu-toggle.active span:nth-child(1){
+  top:11px;
+  transform:rotate(45deg);
+  background:#ff1801;
+}
+.menu-toggle.active span:nth-child(2){
+  opacity:0;
+}
+.menu-toggle.active span:nth-child(3){
+  top:11px;
+  transform:rotate(-45deg);
+  background:#ff1801;
+}
+
+@media (max-width:768px){
+
+.one{
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    justify-content:space-between;
+    padding:15px 20px;
+}
+
+.menu-toggle{
+    display:block;
+}
+
+.mobile-actions{
+    display:flex;
+    align-items:center;
+    gap:14px; 
+}
+
+.mobile-actions .button{
+    margin-left: 8px !important;
+}
+
+#navButton{
+    margin-left: 8px !important;
+}
+
+ol{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:0;
+    margin:0;
+    padding:0;
+
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100vh;
+    background:rgba(0,0,0,0.97);
+
+    transform:translateY(-100%);
+    opacity:0;
+    visibility:hidden;
+    transition:transform 0.35s ease, opacity 0.35s ease, visibility 0.35s;
+    z-index:10000;
+}
+
+ol.show{
+    transform:translateY(0);
+    opacity:1;
+    visibility:visible;
+}
+
+ol li{
+    padding:18px 0;
+}
+
+ol li a{
+    font-size:22px;
+}
+
+.button{
+    margin:0;
+}
+
+.button .bb{
+    padding:8px 14px;
+    font-size:14px;   
+}
+
+}
+
+@media (max-width:768px){
+
+#navList{
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 25px;
+
+    width: 100%;
+    height: 100vh;
+
+    background: rgba(0,0,0,.97);
+
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+
+    transition: .35s;
+    z-index: 10000;
+}
+
+#navList.show{
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+}
+
+.navList li{
+    padding:0;
+}
+
+#navList li a{    
+    font-size:22px;
+}
+}
+
+@media (max-width:768px){
+
+.one{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 20px;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    background:#000;
+    z-index:9999;
+}
+
+.navbar-brand{
+    margin:0;
+}
+
+.mobile-actions{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.button{
+    margin:0 !important;
+}
+
+.menu-toggle{
+    display:block;
+}
+}
+
+@media (max-width: 768px){
+
+.home{
+height:auto;
+}
+
+}
+
+.sh{
+  width: 100%;
+  height: 300px;
+  background-color: black;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+.dropdown-content {
+  display:none;
+}
+
+.show {
+  display:block;
+}
+.sh {
+  position: relative;
+  display: block;
+  padding-top: 30px;
+}
+
+.bt {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #111;
+  min-width: 90px;
+  padding-left: 12px;
+  border-radius: 8px;
+  margin-left: 80px;
+}
+
+
+.dropdown-content a {
+  display: block;  
+  padding: 10px;
+  color: white;
+  text-decoration: none;
+}
+
+
+.dropdown-content a:hover {
+  background-color: #333;
+}
+.show {
+  display: block;
+}
+button{
+  border-color: white;
+  border-radius: 25px;
+  margin-left: 80px;
+  border-width: 3px;
+  border-style:hidden;
+}
+.race{
+  padding: 40px 0;
+
+}
+.cal{
+  float: right;
+  margin-right: 20px;
+  width: 190px;
+  background-color: red;
+  color: black;
+  border-style: hidden;
+  font-size: 20px;
+}
+
+
+
+.cards-container{
+    display:flex;
+    justify-content:center;
+    gap:25px;
+    flex-wrap:wrap;
+    padding:25px;
+}
+
+.card{
+    width:100%;
+    min-height:220px;
+    background:black;
+    border-radius:12px;
+    padding:20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:white;
+    flex:0 0 350px;
+    overflow:hidden;
+    transition:0.3s;
+}
+.span{
+  padding-left: 100px;
+  color: black;
+}
+
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+}
+
+
+
+.left{
+    flex:1;
+}
+
+.tag {
+  font-size: 12px;
+  color: gray;
+  padding-top: -5px;
+}
+
+.desc {
+  font-size: 15px;
+  font-size: medium;
+  color: #ccc;
+  margin-bottom: auto;
+}
+
+.date {
+  margin-top: auto;
+  font-weight: bold;
+  color: white;
+  font-size: 13px;
+  padding-top: 20px;
+  color: #ccc;
+}
+
+
+.card-img{
+    width:120px;
+    height:150px;
+    object-fit:cover;
+    border-radius:8px;
+}
+.card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+    width:350px;
+    max-width:100%;
+}
+.card-link:hover .card {
+  transform: translateY(-5px);
+}
+.red-line{
+    width:100%;
+    height:4px;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        red,
+        white,
+        red,
+        transparent
+    );
+    background-size:200% 100%;
+    animation:f1line 3s linear infinite;
+    box-shadow:0 0 10px red;
+    border-radius:10px;
+}
+@keyframes f1line{
+    0%{
+        background-position:200% 0;
+    }
+
+    100%{
+        background-position:-200% 0;
+    }
+}
+
+@media screen and (max-width:768px){
+
+  .cards-container{
+    grid-template-columns: 1fr;
+    padding: 15px;
+  }
+  .cards-container{
+    grid-template-columns:repeat(3, 1fr);
+    gap:25px;
+    padding:25px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:25px;
+}
+@media(max-width:768px){
+  .cards-container{
+      grid-template-columns:1fr;
+  }
+}
+
+  .card{
+    flex-direction: column;
+    text-align: center;
+    width: 100%;
+    margin: 0px; 
+  }
+  .cards-container{
+    display:flex;
+    justify-content:space-evenly;
+    flex-wrap:wrap;
+    gap:30px;
+    padding:25px;
+}
+.card{
+    width:350px;
+    max-width:100%;
+    min-height:220px;
+}
+
+  .card-img{
+    width: 100%;
+    max-width: 220px;
+    height: auto;
+    margin-top: 15px;
+    margin-left: 0;
+  }
+
+  .span{
+    padding-left: 0;
+  }
+
+  .cal{
+    width: 40%;
+    margin-top: 20px;
+    float: none;
+  }
+
+  h1{
+    font-size: 28px;
+  }
+  .number{
+    height: 160px;
+  }
+  .lap{
+    margin-left:0px;
+    max-height: 1400px;
+  }
+
+}
+
+
+
+.foot{
+  width: 100%;
+  height: auto;
+  background-color: #1E2230;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  padding: 20px 0;
+  margin-bottom: 20px;
+}
+.co{
+  padding: 20px;
+  font-family: EB Garamond;
+}
+.ll {
+  display:flex;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  text-align: center;
+}
+.ll {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); 
+  gap: 20px;
+  padding: 20px;
+  text-align: center;
+}
+.ll a {
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+
+.ll div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.lu,.pi,.ar,.le,.he,.pu{
+  padding-right: 80px;
+}
+.lu{
+  padding-left: 100px;
+
+}
+
+
+
+
+.middle{
+  width: 100%;
+  height: 230px;
+  background-color:#3A3B42;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  margin-top: -45px;
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 30px;
+  gap: 100px;
+  align-items:center;
+}
+.middle div {
+  flex: 0 0 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.paper{
+  display: flex;
+  margin-bottom:60px;
+}
+
+
+
+
+
+
+@media (max-width: 768px){
+
+  .middle{
+    margin:0%;
+    margin-top: 30px ;
+    padding: 0%;
+  }
+
+  .louis,.nest,.tmobile,.sf{
+   padding-left:20px;
+  }
+ 
+  .paper {
+  margin-bottom:10px;
+}
+
+.paper {
+  display: flex;
+  justify-content:space-between ;
+  align-items: center;
+  width: 100%;
+  padding: 10px 16px;
+}
+.co {
+  margin-bottom: 0px;
+}
+
+
+.co {
+  font-weight: bold;
+  padding: 0 16px;
+  white-space: nowrap;
+  font-size: 16px;
+}
+.lu,.pi,.ar,.he,.le,.pu{
+  padding-left:0px;
+  padding:-0%;
+}
+  .ll {
+    grid-template-columns: repeat(2, 1fr);
+    padding-left: 100px;
+  }
+}
+@media (max-width: 768px) {
+
+  .middle {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .middle div {
+    width: 30%; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+    .middle div:nth-child(4),
+  .middle div:nth-child(5) {
+    width: 45%;
+  }
+}
+
+.paper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  margin-bottom: 10px;
+}
+
+.co {
+   padding: 20px;
+  color: #ADD8E6;
+  font-weight: bold;
+}
+
+#red{
+    width:100%;
+    height:5px;
+    position:relative;
+    overflow:hidden;
+    background:#111;
+}
+
+#red::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-20%;
+    width:20%;
+    height:100%;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        red,
+        white,
+        red,
+        transparent
+    );
+
+    animation:racingline 2s linear infinite;
+    box-shadow:0 0 20px red;
+}
+@keyframes racingline{
+    0%{
+        left:-20%;
+    }
+
+    100%{
+        left:120%;
+    }
+}
+</style>
+
+<body>
+  <div class="home">
+    <nav class="one fixed-top;">
+    <a class="navbar-brand" href="#"><img src="{% static 'formula.png' %}" width="80px"></a>
+      <ol id="navList">
+        <li class="ss"><a href="{% url 'index' %}">Home</a></li>
+        <li class="s"><a href="{% url 'second' %}">Schedule</a></li>
+        <li class="dd"><a href="{% url 'drive' %}">Drivers</a></li>
+        <li class="t"><a href="{% url 'team' %}">Teams</a></li>
+        <li class="mm"><a href="{% url 'membership' %}">F1 Membership</a></li>
+      </ol>
+
+      <div class="mobile-actions">
+      <div class="button" id="navButton">
+
+{% if user.is_authenticated %}
+
+    <a href="{% url 'logout' %}">
+        <button class="bb" type="button">Logout</button>
+    </a>
+
+{% else %}
+
+    <a href="{% url 'login' %}">
+        <button class="bb" type="button">Login</button>
+    </a>
+
+{% endif %}
+
+</div>
+
+<button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
+      </div>
+
+    </nav>
+   </div> 
+
+
+   <div class="sh">
+  <button onclick="toggleDropdown()" class="bt" style="background-color: #0B0F1A; color: white;">2026 ▼</button>
+  <div id="menu" class="dropdown-content">
+    <a href="https://www.formula1.com/en/racing/2025">2025</a>
+    <a href="https://www.formula1.com/en/racing/2024">2024</a>
+    <a href="https://www.formula1.com/en/racing/2023">2023</a>
+    <a href="https://www.formula1.com/en/racing/2022">2022</a>
+    <a href="https://www.formula1.com/en/racing/2021">2021</a>
+        <script>
+function toggleDropdown() {
+  document.getElementById("menu").classList.toggle("show");
+}
+</script>
+</div>
+<h1 class="race" style="color: red;">2026 FIA Formula One World Championship™ <br> Race Calendar 2026  </h1>
+</div>
+
+
+
+<div class="cards-container">
+
+  <!-- CARD 1 -->
+  <a href="https://www.formula1.com/en/racing/2026/pre-season-testing-1" class="card-link">
+    <div class="card lap" style="height:400px;">
+      <div class="left number">
+        <p class="tag">TESTING 1</p>
+
+        <h2>
+          <img class="baha" src="{% static 'baha2-removebg-preview.png' %}"  width="40px">
+          Bahrain
+        </h2>
+
+        <p class="desc">FORMULA 1 ARAMCO PRE-SEASON TESTING 1 2026</p>
+
+        <p class="date">11 - 13 FEB</p>
+      </div>
+
+      <img src="{% static 'drift.jpg' %}"  class="card-img">
+    </div>
+  </a>
+
+  <!-- CARD 2 -->
+  <a href="https://www.formula1.com/en/racing/2026/pre-season-testing-2" class="card-link">
+    <div class="card lap" style="height:400px;">
+      <div class="left number">
+        <p class="tag">TESTING 2</p>
+
+        <h2>
+          <img src="{% static 'baha2-removebg-preview.png' %}" width="40px">
+          Bahrain
+        </h2>
+
+        <p class="desc">FORMULA 1 ARAMCO PRE-SEASON TESTING 2 2026</p>
+
+        <p class="date">18 - 20 FEB</p>
+      </div>
+
+      <img src="{% static 'drift.jpg' %}" class="card-img">
+    </div>
+  </a>
+
+  <!-- CARD 3 -->
+  <a href="https://www.formula1.com/en/racing/2026/australia" class="card-link">
+    <div class="card lap" style="height:400px;">
+      <div class="left number">
+        <p class="tag">ROUND 1</p>
+
+        <h2> 
+          <img src="{% static 'asu.jpg' %}" width="30px">
+          Australia</h2>
+
+        <p class="desc">FORMULA 1 QATAR AIRWAYS AUSTRALIAN GRAND PRIX 2026</p>
+
+        <p class="date"> 🏁06 - 08 MAR</p>
+      </div>
+      <img src="{% static 'Australia 2.png' %}"  class="card-img">
+    </div>
+  </a>
+
+</div>
+
+
+
+<div class="cards-container">
+
+  <!-- CARD 1 --> 
+  <a href="https://www.formula1.com/en/racing/2026/china" class="card-link">
+    <div class="card lap" style="height:400px;">
+      <div class="left number">
+        <p class="tag">ROUND 2</p>
+
+        <h2>
+          <img class="baha" src="{% static 'china flag.jpg' %}" width="30px">
+          China
+        </h2>
+
+        <p class="desc">FORMULA 1 HEINEKEN CHINESE GRAND PRIX 2026</p>
+
+        <p class="date"> 🏁13 - 15 MAR</p>
+      </div>
+
+      <img src="{% static 'China 2.png' %}"  class="card-img">
+    </div>
+  </a>
+
+  <!-- CARD 2 -->
+  <a href="https://www.formula1.com/en/racing/2026/japan" class="card-link">
+    <div class="card lap" style="height:400px;">
+      <div class="left number">
+        <p class="tag">ROUND 3</p>
+
+        <h2>
+          <img src="{% static 'japan flag.webp' %}" width="30px">
+          Japan
+        </h2>
+
+        <p class="desc">FORMULA 1 ARAMCO JAPANESE GRAND PRIX 2026</p>
+
+        <p class="date"> 🏁27 - 20 FEB</p>
+      </div>
+
+      <img src="{% static 'japan 2.png' %}" class="card-img">
+    </div>
+  </a>
+
+  <!-- CARD 3 -->
+  <a href="https://www.formula1.com/en/racing/2026/miami" class="card-link">
+    <div class="card lap" style="height:400px;">
+      <div class="left number">
+        <p class="tag"  >ROUND 4 <span class="span" >Next Race ></span></p>
+
+        <h2> 
+          <img src="{% static 'miami flag.webp' %}" width="30px">
+          Miami</h2>
+
+        <p class="desc">FORMULA 1 CRYPTO.COM MIAMI GRAND PRIX 2026</p>
+
+        <p class="date"> 01 - 03 MAY</p>
+      </div>
+      <img src="{% static 'miame-removebg-preview.png' %}" class="card-img">
+    </div>
+  </a>
+</div>
+
+
+
+
+<div class="cards-container">
+
+  <!-- CARD 1 -->
+  <a href="https://www.formula1.com/en/racing/2026/canada" class="card-link">
+    <div class="card lap" style="height:400px;">
+      <div class="left number">
+        <p class="tag">ROUND 5</p>
+
+        <h2>
+          <img class="baha" src="{% static 'canada flag.png' %}" width="30px">
+          Canada
+        </h2>
+
+        <p class="desc">FORMULA 1 LENOVO GRAND PRIX DU CANADA 2026</p>
+
+        <p class="date"> 22 - 24  MAY</p>
+      </div>
+
+      <img src= "{% static 'canada.png' %}" class="card-img">
+    </div>
+  </a>
+
+  <!-- CARD 2 -->
+  <a href="https://www.formula1.com/en/racing/2026/monaco" class="card-link">
+    <div class="card lap" style="height:400px;">
+      <div class="left number">
+        <p class="tag">ROUND 6</p>
+
+        <h2>
+          <img src="{% static 'monaco flag.webp' %}" width="30px">
+          Monaco
+        </h2>
+
+        <p class="desc">FORMULA 1 LOUIS VUITTON GRAND PRIX DE MONACO 2026</p>
+
+        <p class="date"> 05 - 07 JUN</p>
+      </div>
+
+      <img src="{% static 'monaco.png' %}" class="card-img">
+    </div>
+  </a>
+
+  <!-- CARD 3 -->
+  <a href="https://www.formula1.com/en/racing/2026/barcelona-catalunya" class="card-link">
+    <div class="card lap" style="height:400px;">
+      <div class="left number">
+        <p class="tag">ROUND 7</p>
+
+        <h2> 
+          <img src="{% static 'Barcelona flag.png' %}" width="30px">
+          Barcelona</h2>
+
+        <p class="desc">FORMULA 1 MSC CRUISES GRAN PREMIO DE BARCELONA 2026</p>
+
+        <p class="date"> 12 - 14 JUN</p>
+      </div>
+      <img src="{% static 'Barcelona-Catalunya.png' %}" class="card-img">
+    </div>
+  </a>
+</div>
+
+
+
+
+<div class="cards-container">
+
+  <!-- CARD 1 -->
+  <a href="https://www.formula1.com/en/racing/2026/austria" class="card-link">
+    <div class="card lap" style="height:400px;">
+      <div class="left number">
+        <p class="tag">ROUND 8</p>
+
+        <h2>
+          <img class="baha" src="{% static 'Austria flag.webp' %}" width="30px">
+          Austria
+        </h2>
+
+        <p class="desc">FORMULA 1 LENOVO AUSTRIAN GRAND PRIX 2026</p>
+
+        <p class="date"> 26 - 28 JUN</p>
+      </div>
+
+      <img src=" {% static 'Austria.png' %}"  class="card-img">
+    </div>
+  </a>
+
+  <!-- CARD 2 -->
+  <a href="https://www.formula1.com/en/racing/2026/great-britain" class="card-link">
+    <div class="card lap" style="height:400px;">
+      <div class="left number">
+        <p class="tag">ROUND 9</p>
+
+        <h2>
+          <img src=" {% static 'Great Britain flag.webp' %}" width="30px">
+          Great Britain
+        </h2>
+
+        <p class="desc">FORMULA 1 PIRELLI BRITISH GRAND PRIX 2026</p>
+
+        <p class="date"> 03 - 05 JUL</p>
+      </div>
+
+      <img src="{% static 'Great Britain.png' %}" class="card-img">
+    </div>
+  </a>
+
+  <!-- CARD 3 -->
+  <a href="https://www.formula1.com/en/racing/2026/belgium" class="card-link">
+    <div class="card lap" style="height:400px;">
+      <div class="left number">
+        <p class="tag">ROUND 10</p>
+
+        <h2> 
+          <img src="{% static 'Belgium flag.webp' %}"  width="30px">
+          Belgium</h2>
+
+        <p class="desc">FORMULA 1 MOËT & CHANDON BELGIAN GRAND PRIX 2026</p>
+
+        <p class="date"> 17 - 19 JUL</p>
+      </div>
+      <img src= "{% static 'Belgium.png' %}"  class="card-img">
+    </div>
+  </a>
+</div>
+
+
+
+<div class="cards-container">
+
+  <!-- CARD 1 -->
+  <a href="https://www.formula1.com/en/racing/2026/hungary" class="card-link">
+    <div class="card lap" style="height:400px;">
+      <div class="left number">
+        <p class="tag">ROUND 11</p>
+
+        <h2>
+          <img class="baha" src= "{% static 'china flag.jpg' %}"  width="30px">
+          Hungary
+        </h2>
+
+        <p class="desc">FORMULA 1 AWS HUNGARIAN GRAND PRIX 2026</p>
+
+        <p class="date"> 24 - 26 JUL</p>
+      </div>
+
+      <img src="{% static 'Hungary.png' %}"  class="card-img">
+    </div>
+  </a>
+
+  <!-- CARD 2 -->
+  <a href="https://www.formula1.com/en/racing/2026/netherlands" class="card-link">
+    <div class="card lap" style="height:400px;">
+      <div class="left number">
+        <p class="tag">ROUND 12</p>
+
+        <h2>
+          <img src="{% static 'japan flag.webp' %}"  width="30px">
+          Netherlands
+        </h2>
+
+        <p class="desc">FORMULA 1 HEINEKEN DUTCH GRAND PRIX 2026</p>
+
+        <p class="date"> 21 - 23 AUG</p>
+      </div>
+
+      <img src="{% static 'Netherlands.png' %}" class="card-img">
+    </div>
+  </a>
+
+  <!-- CARD 3 -->
+  <a href="https://www.formula1.com/en/racing/2026/italy" class="card-link">
+    <div class="card lap" style="height:400px;">
+      <div class="left number">
+        <p class="tag">ROUND 13</p>
+
+        <h2> 
+          <img src="{% static 'miami flag.webp' %}" width="30px">
+          Italy</h2>
+
+        <p class="desc">FORMULA 1 PIRELLI GRAN PREMIO D'ITALIA 2026</p>
+
+        <p class="date"> 04 - 06 SEP</p>
+      </div>
+      <img src="{% static 'Italy.png' %}" class="card-img">
+    </div>
+  </a>
+</div>
+
+
+<div class="cards-container">
+
+  <!-- CARD 1 -->
+  <a href="https://www.formula1.com/en/racing/2026/spain" class="card-link">
+    <div class="card lap" style="height:400px;">
+      <div class="left number">
+        <p class="tag">ROUND 14</p>
+
+        <h2>
+          <img class="baha" src="{% static 'spain flag.webp' %}" width="30px">
+          Spain
+        </h2>
+
+        <p class="desc">FORMULA 1 TAG HEUER GRAN PREMIO DE ESPAÑA 2026</p>
+
+        <p class="date"> 11 - 13 SEP</p>
+      </div>
+
+      <img src="{% static 'Spain.png' %}"  class="card-img">
+    </div>
+  </a>
+
+  <!-- CARD 2 -->
+  <a href="https://www.formula1.com/en/racing/2026/azerbaijan" class="card-link">
+    <div class="card lap" style="height:400px;">
+      <div class="left number">
+        <p class="tag">ROUND 15</p>
+
+        <h2>
+          <img src= "{% static 'Azerbaijan flag.jpeg' %}" width="30px">
+          Azerbaijan
+        </h2>
+
+        <p class="desc">FORMULA 1 QATAR AIRWAYS AZERBAIJAN GRAND PRIX 2026</p>
+
+        <p class="date"> 24 - 26 SEP</p>
+      </div>
+
+      <img src="{% static 'Azerbaijan.png' %}" class="card-img">
+    </div>
+  </a>
+
+  <!-- CARD 3 -->
+  <a href="https://www.formula1.com/en/racing/2026/singapore" class="card-link">
+    <div class="card lap" style="height:400px;">
+      <div class="left number">
+        <p class="tag">ROUND 16</p>
+
+        <h2> 
+          <img src= "{% static 'Singapore-Flag.png' %}" width="30px">
+          Singapore</h2>
+
+        <p class="desc">FORMULA 1 SINGAPORE AIRLINES SINGAPORE GRAND PRIX 2026</p>
+
+        <p class="date"> 09 - 11 OCT</p>
+      </div>
+      <img src="{% static 'Singapore.png' %}" class="card-img">
+    </div>
+  </a>
+</div>
+
+
+
+<div class="cards-container">
+
+  <!-- CARD 1 -->
+  <a href="https://www.formula1.com/en/racing/2026/united-states" class="card-link">
+    <div class="card lap" style="height:400px;">
+      <div class="left number">
+        <p class="tag">ROUND 17</p>
+
+        <h2>
+          <img class="baha" src= "{% static 'United States flag.webp' %}" width="30px">
+          United States
+        </h2>
+
+        <p class="desc">FORMULA 1 MSC CRUISES UNITED STATES GRAND PRIX 2026</p>
+
+        <p class="date"> 23 - 25 OCT</p>
+      </div>
+
+      <img src="{% static 'United States.png' %}"  class="card-img">
+    </div>
+  </a>
+
+  <!-- CARD 2 -->
+  <a href="https://www.formula1.com/en/racing/2026/mexico" class="card-link">
+    <div class="card lap" style="height:400px;">
+      <div class="left number">
+        <p class="tag">ROUND 18</p>
+
+        <h2>
+          <img src= "{% static 'Mexico flag.webp' %}" width="30px">
+          Mexico
+        </h2>
+
+        <p class="desc">FORMULA 1 GRAN PREMIO DE LA CIUDAD DE MÉXICO 2026</p>
+
+        <p class="date"> 30 - 01 NOV</p>
+      </div>
+
+      <img src= "{% static 'Mexico.png' %}" class="card-img">
+    </div>
+  </a>
+
+  <!-- CARD 3 -->
+  <a href="https://www.formula1.com/en/racing/2026/brazil" class="card-link">
+    <div class="card lap" style="height:400px;">
+      <div class="left number">
+        <p class="tag">ROUND 19</p>
+
+        <h2> 
+          <img src= "{% static 'Brazil flag.webp' %}" width="30px">
+          Brazil</h2>
+
+        <p class="desc">FORMULA 1 MSC CRUISES GRANDE  PAULO 2026</p>
+
+        <p class="date"> 06 - 08 NOV</p>
+      </div>
+      <img src="{% static 'Brazil.png' %}" class="card-img">
+    </div>
+  </a>
+</div>
+
+
+
+<div class="cards-container">
+
+  <!-- CARD 1 -->
+  <a href="https://www.formula1.com/en/racing/2026/las-vegas" class="card-link">
+    <div class="card lap" style="height:400px;">
+      <div class="left number">
+        <p class="tag">ROUND 20</p>
+
+        <h2>
+          <img class="baha" src= "{% static 'Las Vegas flag.webp' %}" width="30px">
+          Las Vegas
+        </h2>
+
+        <p class="desc">FORMULA 1 HEINEKEN LAS VEGAS GRAND PRIX 2026</p>
+
+        <p class="date"> 19 - 21 NOV</p>
+      </div>
+
+      <img src="{% static 'Las vegas.png' %}"  class="card-img">
+    </div>
+  </a>
+
+  <!-- CARD 2 -->
+  <a href="https://www.formula1.com/en/racing/2026/qatar" class="card-link">
+    <div class="card lap" style="height:400px;">
+      <div class="left number">
+        <p class="tag">ROUND 21</p>
+
+        <h2>
+          <img src="{% static 'Qatar flag.jpg' %}" width="30px">
+          Qatar
+        </h2>
+
+        <p class="desc">FORMULA 1 QATAR AIRWAYS QATAR GRAND PRIX 2026</p>
+
+        <p class="date"> 27 - 29 NOV</p>
+      </div>
+
+      <img src="{% static 'Qatar.png' %}" class="card-img">
+    </div>
+  </a>
+
+  <!-- CARD 3 -->
+  <a href="https://www.formula1.com/en/racing/2026/united-arab-emirates" class="card-link">
+    <div class="card lap" style="height:400px;">
+      <div class="left number">
+        <p class="tag">ROUND 22</p>
+
+        <h2> 
+          <img src= "{% static 'Abu Dhabi flag.png' %}" width="30px">
+          Abu Dhabi</h2>
+
+        <p class="desc">FORMULA 1 ETIHAD AIRWAYS ABU DHABI GRAND PRIX 2026</p>
+
+        <p class="date"> 04 - 06 DEC</p>
+      </div>
+      <img src="{% static 'Abu Dhabi.png' %}" class="card-img">
+    </div>
+  </a>
+</div>
+
+
+   <div class="red-line"></div>
+<br>
+<div class="foot">
+  <div class="paper">
+    <h2 class="co" style="color:#ADD8E6;">CO-PARTNERS</h2>
+  </div>
+ 
+<div class="ll">
+  <a class="lu" href="https://www.lvmh.com/en"><h3>Lvmh</h3></a>
+  <a class="pi" href="https://www.pirelli.com/tyres/en-ww/motorsport/car/formula-1?utm_source=formula1.com&utm_medium=referral&utm_campaign=ww_motorsport_f1&utm_content=homepage"><h3>Pirelli</h3></a>
+  <a class="ar" href="https://www.aramco.com/"><h3>Aramco</h3></a>
+  <a class="he" href="https://www.heineken.com/in/en/agegateway/?returnUrl=%2fin%2fen%2fhome"><h3>Heineken</h3></a>
+  <a class="le" href="https://www.lenovo.com/in/en/"><h3>Lenovo</h3></a>
+  <a class="pu" href="https://eu.puma.com/de/en/sports/motorsport?utm_source=PP&utm_pricing=OTH&utm_medium=BM&utm_campaign=BM_All_PP_OTH_OTH_BRD_Motorsport_SS23_Formula1_F1-Website_NA_NA&utm_budget=global"><h3>Puma</h3></a>
+</div>
+<div id="red"></div>
+</div>
+
+<div class="middle">
+  <div class="louis"><a href="https://in.louisvuitton.com/eng-in/homepage"><img src="{% static 'lv.png' %}" width="100px" height="auto"></a></div>
+  <div class="nest"><a href="https://www.nestle.com/"><img src="{% static 'ns.png' %}" width="100px" height="100px"></a></div>
+  <div class="tmobile"><a href="https://www.t-mobile.com/?msockid=3653e332c6246f2b3f74f523c7e36e69"><img src="{% static 'tm.webp' %}" width="100px" height="50px"></a></div>
+  <div class="sf"><a href="https://www.salesforce.com/in/?ir=1"><img src="{% static 'sf.png' %}" width="100px" height="100px"></a></div>
+  
+</div>
+
+<script>
+const menuToggle = document.getElementById("menuToggle");
+const navList = document.getElementById("navList");
+
+menuToggle.onclick = function () {
+
+    menuToggle.classList.toggle("active");
+    navList.classList.toggle("show");
+
+    if(navList.classList.contains("show")){
+        document.body.style.overflow = "hidden";
+    }else{
+        document.body.style.overflow = "auto";
+    }
+};
+
+document.querySelectorAll("#navList a").forEach(link=>{
+    link.onclick=function(){
+        menuToggle.classList.remove("active");
+        navList.classList.remove("show");
+        document.body.style.overflow="auto";
+    };
+});
+</script>
+
+</body>
+</html>

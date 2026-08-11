@@ -1,0 +1,1328 @@
+{% load static %} 
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="{% static 'icon.png' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Drives</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<style>
+   *{
+    box-sizing: border-box;
+  }
+
+   body{
+    background-color:#0B0F1A; 
+     padding-top:100px;
+  }
+
+  .home{
+    background-color: black;  
+    color: white;
+    height: auto;
+    margin: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+    position:relative;
+    background-image:
+    linear-gradient(
+      rgba(0,0,0,0.65),
+      rgba(0,0,0,0.65)),
+    url("{% static 'ff.png' %}");
+
+   background-size: cover;
+   background-position: center;
+  }
+
+li a {
+  white-space: wrap;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+li{
+  list-style: none;
+}
+.one {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+  
+}
+
+  .one{
+    padding-top: 30px;
+  }
+  .one{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+
+    display: grid;
+    grid-template-columns: 120px 1fr 120px;
+    align-items: center;
+
+    padding: 25px 40px;
+    background-color: black;
+}
+
+
+a {
+  text-decoration: none;
+  color: white;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.bb {
+  background-color: red; 
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.navbar-brand {
+  margin-right: 20px;
+}
+ol {
+  display: flex;
+  gap: clamp(15px, 3vw, 50px);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+.navbar-brand {
+  margin-right: 60px;
+}
+
+.button {
+  margin-left: 60px;
+}
+
+li a {
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+li a:hover {
+  color: #ff1801;
+}
+
+
+.menu-toggle{
+  display:none;
+  background:none;
+  border:none;
+  cursor:pointer;
+  width:32px;
+  height:26px;
+  padding:0;
+  position:relative;
+  z-index:10001;
+  justify-self:end;
+}
+
+.menu-toggle span{
+  display:block;
+  position:absolute;
+  left:0;
+  width:100%;
+  height:3px;
+  background:white;
+  border-radius:3px;
+  transition:0.3s ease;
+}
+
+.menu-toggle span:nth-child(1){ top:0; }
+.menu-toggle span:nth-child(2){ top:11px; }
+.menu-toggle span:nth-child(3){ top:22px; }
+
+.menu-toggle.active span:nth-child(1){
+  top:11px;
+  transform:rotate(45deg);
+  background:#ff1801;
+}
+.menu-toggle.active span:nth-child(2){
+  opacity:0;
+}
+.menu-toggle.active span:nth-child(3){
+  top:11px;
+  transform:rotate(-45deg);
+  background:#ff1801;
+}
+
+@media (max-width:768px){
+
+.one{
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    justify-content:space-between;
+    padding:15px 20px;
+}
+
+.menu-toggle{
+    display:block;
+}
+
+.navbar-brand,
+.mobile-actions{
+    position:relative;
+    z-index:10002;
+}
+
+.mobile-actions{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+ol{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:0;
+    margin:0;
+    padding:0;
+
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100vh;
+    background:rgba(0,0,0,0.97);
+
+    transform:translateY(-100%);
+    opacity:0;
+    visibility:hidden;
+    transition:transform 0.35s ease, opacity 0.35s ease, visibility 0.35s;
+    z-index:10000;
+}
+
+ol.show{
+    transform:translateY(0);
+    opacity:1;
+    visibility:visible;
+}
+
+ol li{
+    padding:18px 0;
+}
+
+ol li a{
+    font-size:22px;
+}
+
+.button{
+    margin:0;
+}
+
+.button .bb{
+    padding:8px 14px;
+    font-size:14px;
+}
+
+}
+
+@media (max-width: 768px){
+
+.home{
+height:auto;
+}
+
+}
+
+body.menu-open{
+  overflow:hidden;
+}
+
+h2{
+  font-family: Cabin Sketch;
+  color: #ff1801;
+  padding: 30px;
+  padding-top: 80px;
+}
+.book{
+  font-family: Cabin Sketch;
+  color: #ff1801;
+  padding-left: 30px;
+}
+.card{
+  width: 665px;
+  height: 300px;
+    background:
+        linear-gradient(
+            90deg,
+            #730018 0%,
+            #3a0010 45%,
+            #85001f 75%,
+            #ff0033 100%
+        );
+    border-radius: 16px;
+    border: none;
+    margin-left: 40px;
+    display: flex;
+     position: relative;
+}
+.wire,.l,.mx,.pg,.lw,.ec,.cs,.nh,.na,.sp{
+    width: 665px;
+  height: 300px;
+    border-radius: 16px;
+    border: none;
+    margin-left: 15px;
+    display: flex;
+     position: relative;
+  background: linear-gradient(
+    90deg,
+    #08856F 0%,
+    #0A8B75 40%,
+    #18C9B7 75%,
+    #4EF5E7 100%
+);
+}
+
+.l{
+background: linear-gradient(
+    90deg,
+    #8A4500 0%,
+    #A85600 35%,
+    #D97700 70%,
+    #FF9800 100%
+);
+}
+.mx{
+
+background: linear-gradient(
+    90deg,
+    #142F5F 0%,
+    #1A3D78 40%,
+    #2A5BA8 75%,
+    #4A86E8 100%
+);
+}
+
+.pg{
+background: linear-gradient(
+    90deg,
+    #045B85 0%,
+    #0A6E99 40%,
+    #00A2E8 75%,
+    #1DB8FF 100%
+);
+}
+  .lw{
+  background: linear-gradient(
+      90deg,
+      #123CC8 0%,
+      #1849E0 40%,
+      #2962FF 75%,
+      #7DA2FF 100%
+  );
+  }
+.ec{
+background: linear-gradient(
+    90deg,
+    #6F7A80 0%,
+    #88939A 40%,
+    #AEB8BE 75%,
+    #E4E8EB 100%
+);
+}
+.cs{
+background: linear-gradient(
+    90deg,
+    #002A66 0%,
+    #003D99 40%,
+    #0066E6 75%,
+    #4DA3FF 100%
+);
+}
+.nh{
+background: linear-gradient(
+    90deg,
+    #8B1600 0%,
+    #A31C00 40%,
+    #D12A00 75%,
+    #FF4500 100%
+);
+}
+.na{
+background: linear-gradient(
+    90deg,
+    #00503F 0%,
+    #006B55 40%,
+    #0D8F73 75%,
+    #39D6B0 100%
+);
+}
+
+.sp{
+background: linear-gradient(
+    90deg,
+    #66666B 0%,
+    #7A7A80 40%,
+    #A6A6AC 75%,
+    #E0E0E4 100%
+);
+}
+
+
+.img{
+  margin-left: 220px;
+  margin-top: -168px;
+   position: absolute;
+    right: 20px;
+    bottom: 0;   
+}
+.im{
+  position: absolute;
+  left: 0px;
+  bottom: 0;
+  margin-left: 220px;
+  margin-top: -168px;
+}
+.right{
+    display:flex;
+    flex-wrap:wrap;
+    gap:25px;
+    margin-left:30px;
+}
+.red{
+  width: 1470px;
+  height: 300px;
+  background-color: red;
+  margin-left: 20px;
+  border-radius: 20px;
+  color: whitesmoke;
+  padding-top: 160px;
+  padding-left: 20px;
+}
+.but{
+  border-radius: 30px;
+  background-color:red;
+  color: whitesmoke;
+  border-color: red;
+  box-shadow: #000000;
+}
+
+
+.foot{
+  width: 100%;
+  height: auto;
+  background-color: #1E2230;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  padding: 20px 0;
+  margin-bottom: 20px;
+}
+.co{
+  padding: 20px;
+  font-family: EB Garamond;
+}
+.ll {
+  display:flex;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  text-align: center;
+}
+.ll {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); 
+  gap: 20px;
+  padding: 20px;
+  text-align: center;
+}
+.ll a {
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+
+.ll div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.lu,.pi,.ar,.le,.he,.pu{
+  padding-right: 80px;
+}
+.lu{
+  padding-left: 100px;
+
+}
+
+
+
+
+.middle{
+  width: 100%;
+  height: 230px;
+  background-color:#3A3B42;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  margin-top: -45px;
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 30px;
+  gap: 100px;
+  align-items:center;
+}
+.middle div {
+  flex: 0 0 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.paper{
+  display: flex;
+  margin-bottom:60px;
+}
+
+
+
+
+
+
+@media (max-width: 768px){
+
+  .middle{
+    margin:0%;
+    margin-top: 30px ;
+    padding: 0%;
+  }
+
+  .louis,.nest,.tmobile,.sf{
+   padding-left:20px;
+  }
+ 
+  .paper {
+  margin-bottom:10px;
+}
+
+.paper {
+  display: flex;
+  justify-content:space-between ;
+  align-items: center;
+  width: 100%;
+  padding: 10px 16px;
+}
+.co {
+  margin-bottom: 0px;
+}
+
+
+.co {
+  font-weight: bold;
+  padding: 0 16px;
+  white-space: nowrap;
+  font-size: 16px;
+}
+.lu,.pi,.ar,.he,.le,.pu{
+  padding-left:0px;
+  padding:-0%;
+}
+  .ll {
+    grid-template-columns: repeat(2, 1fr);
+    padding-left: 100px;
+  }
+}
+@media (max-width: 768px) {
+
+  .middle {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .middle div {
+    width: 30%; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+    .middle div:nth-child(4),
+  .middle div:nth-child(5) {
+    width: 45%;
+  }
+
+  .red{
+    width: 440px;
+    height: 200px;
+    padding: 20px;
+    margin-left: 40px;
+    }
+
+   
+}
+
+.paper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  margin-bottom: 10px;
+}
+
+.co {
+   padding: 20px;
+  color: #ADD8E6;
+  font-weight: bold;
+}
+
+#red{
+    width:100%;
+    height:5px;
+    position:relative;
+    overflow:hidden;
+    background:#111;
+}
+
+#red::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-20%;
+    width:20%;
+    height:100%;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        red,
+        white,
+        red,
+        transparent
+    );
+
+    animation:racingline 2s linear infinite;
+    box-shadow:0 0 20px red;
+}
+@keyframes racingline{
+    0%{
+        left:-20%;
+    }
+
+    100%{
+        left:120%;
+    }
+}
+.red-line{
+    width:100%;
+    height:4px;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        red,
+        white,
+        red,
+        transparent
+    );
+    background-size:200% 100%;
+    animation:f1line 3s linear infinite;
+    box-shadow:0 0 10px red;
+    border-radius:10px;
+}
+@keyframes f1line{
+    0%{
+        background-position:200% 0;
+    }
+
+    100%{
+        background-position:-200% 0;
+    }
+}
+
+body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+
+    background:
+    radial-gradient(
+        circle at 20% 20%,
+        rgba(220, 34, 17, 0.08),
+        transparent 40%
+    ),
+    radial-gradient(
+        circle at 80% 60%,
+        rgba(0,255,255,.05),
+        transparent 40%
+    );
+
+    animation:bgMove 15s linear infinite;
+
+    pointer-events:none;
+}
+
+@keyframes bgMove{
+    0%{
+        transform:translateX(0);
+    }
+
+    50%{
+        transform:translateX(50px);
+    }
+
+    100%{
+        transform:translateX(0);
+    }
+}
+
+.num{
+    display:inline-block;
+    transition:.4s;
+}
+
+.card:hover .num,.wire:hover .num,.l:hover .num,.mx:hover .num,.pg:hover .num,.lw:hover .num,
+.cs:hover .num,.ec:hover .num,.nh:hover .num,.na:hover .num,.sp:hover .num{
+    transform:scale(1.3);
+    color:black;
+    text-shadow:0 0 15px white;
+}
+
+
+.img,.im{
+    opacity:0;
+    transform:translateX(20px);
+
+    animation:showDriver .8s forwards;
+}
+
+.img,.im:nth-child(1){
+    animation-delay:.3s;
+}
+
+.img,.im:nth-child(2){
+    animation-delay:.10s;
+}
+
+@keyframes showDriver{
+    to{
+        opacity:1;
+        transform:translateX(0);
+    }
+}
+
+.card,.wire,.l,.mx,.pg,.lw,.ec,.cs,.nh,.na,.sp{
+    opacity:0;
+    transform:translateY(80px);
+
+    animation:cardReveal .8s forwards;
+}
+
+@keyframes cardReveal{
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+.card{
+    filter:drop-shadow(0 0 10px rgba(255,0,0,.4));
+    transition:.5s;
+}
+
+.card:hover{
+    filter:
+        drop-shadow(0 0 15px rgba(255,0,0,.6))
+        drop-shadow(0 0 30px rgba(255,255,255,.1));
+}
+.wire:hover{
+    filter:
+        drop-shadow(0 0 15px rgba(4, 242, 255, 0.477))
+        drop-shadow(0 0 30px rgba(255,255,255,.1));
+}
+.l:hover{
+    filter:
+        drop-shadow(0 0 15px rgba(255, 196, 0, 0.46))
+        drop-shadow(0 0 30px rgba(255,255,255,.1));
+}
+.mx:hover{
+    filter:
+        drop-shadow(0 0 15px rgba(0, 106, 255, 0.46))
+        drop-shadow(0 0 30px rgba(255,255,255,.1));
+}
+.pg:hover{
+    filter:
+        drop-shadow(0 0 15px rgba(0, 162, 255, 0.432))
+        drop-shadow(0 0 30px rgba(255,255,255,.1));
+}
+.lw:hover{
+    filter:
+        drop-shadow(0 0 15px rgba(2, 43, 251, 0.458))
+        drop-shadow(0 0 30px rgba(255,255,255,.1));
+}
+.ec:hover{
+    filter:
+        drop-shadow(0 0 15px rgba( 255, 255, 255, 0.477))
+        drop-shadow(0 0 30px rgba(255,255,255,.1));
+}
+.cs:hover{
+    filter:
+        drop-shadow(0 0 15px rgba(2, 43, 251, 0.458))
+        drop-shadow(0 0 30px rgba(255,255,255,.1));
+}
+.nh:hover{
+    filter:
+        drop-shadow(0 0 15px rgba(247, 55, 2, 0.523))
+        drop-shadow(0 0 30px rgba(255,255,255,.1));
+}
+.na:hover{
+    filter:
+        drop-shadow(0 0 15px rgba(0, 255, 76, 0.562))
+        drop-shadow(0 0 30px rgba(255,255,255,.1));
+}
+.sp:hover{
+    filter:
+        drop-shadow(0 0 15px rgba(255, 254, 254, 0.522))
+        drop-shadow(0 0 30px rgba(255,255,255,.1));
+}
+
+.card,.wire,.l,.mx,.pg,.lw,.ec,.cs,.nh,.na,.sp{
+    position:relative;
+    overflow:hidden;
+}
+
+.card::after,.wire::after,.l::after,.mx::after,.pg::after,.lw::after,.ec::after,.cs::after,.nh::after,.na::after,.sp::after{
+    content:"";
+    position:absolute;
+
+    top:0;
+    left:-100%;
+
+    width:40%;
+    height:100%;
+
+    background:
+    linear-gradient(
+        90deg,
+        transparent,
+        rgba(255,255,255,.15),
+        transparent
+    );
+
+    transform:skewX(-25deg);
+
+    animation:lightSweep 5s infinite;
+}
+
+@keyframes lightSweep{
+    from{
+        left:-100%;
+    }
+
+    to{
+        left:100%;
+    }
+}
+
+.red{
+    filter:drop-shadow(0 0 10px rgba(255,0,0,.4));
+    transition:.5s;
+}
+
+.red:hover{
+    filter:
+        drop-shadow(0 0 15px rgba(255,0,0,.6))
+        drop-shadow(0 0 30px rgba(255,0,0,.4));
+}
+
+
+</style>
+
+<body>
+     <div class="home">
+    <nav class="one">
+    <a class="navbar-brand" href="#"><img src="{% static 'formula.png' %}" width="80px"></a>
+      <ol id="navList">
+        <li class="ss"><a href="{% url 'index' %}">Home</a></li>
+        <li class="s"><a href="{% url 'second' %}">Schedule</a></li>
+        <li class="dd"><a href="{% url 'drive' %}">Drivers</a></li>
+        <li class="t"><a href="{% url 'team' %}">Teams</a></li>
+        <li class="mm"><a href="{% url 'membership' %}">F1 Membership</a></li>
+      </ol>
+
+      <div class="mobile-actions">
+      <div class="button" id="navButton">
+
+{% if user.is_authenticated %}
+
+    <a href="{% url 'logout' %}">
+        <button class="bb" type="button">Logout</button>
+    </a>
+
+{% else %}
+
+    <a href="{% url 'login' %}">
+        <button class="bb" type="button">Login</button>
+    </a>
+
+{% endif %}
+
+</div>
+
+<button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
+      </div>
+
+    </nav>
+   </div> 
+
+   <div class="title">
+    <h2>F1 Driver Lineup 2026</h2>
+    <h5 class="book">Find the current Formula 1 drivers for the 2026 season</h5>
+   </div>
+   <br>
+<div class="right">
+   
+    <div class="card" style="margin-left: 18px;">
+      <a href="https://www.formula1.com/en/drivers/lewis-hamilton">
+      <div class="link" style="color:whitesmoke; padding-left: 10px; font-family:Enriqueta; font-size: 20px;">
+      <h3>Lewis <br> Hamilton</h3>
+      <p>Ferrari</p>
+      <p class="num">44</p>
+
+      <div class="img" style="margin-left:10px;">
+        <img src="{% static 'lh.avif' %}" width="310px">
+      </div>
+      </div>
+      </a>
+    </div> 
+
+      
+    <div class="card" style="margin-left: 18px;">
+      <a href="https://www.formula1.com/en/drivers/charles-leclerc">
+      <div class="link" style="color:whitesmoke; padding-left: 10px; font-family:Enriqueta; font-size: 20px;">
+      <h3>Charles <br> Lecler</h3>
+      <p>Ferrari</p>
+      <p class="num">16</p>
+
+      <div class="im">
+        <img src="{% static 'chalec.avif' %}" width="310px">
+      </div>
+      </div>
+      </a>
+    </div>
+</div>
+<br>
+<br>
+<div class="right">
+   
+    <div class="wire">
+      <a href="https://www.formula1.com/en/drivers/george-russell">
+      <div class="link" style="color:whitesmoke; padding-left: 10px; font-family:Enriqueta; font-size: 20px;">
+      <h3>George <br> Russell</h3>
+      <p>Mercedes</p>
+      <p class="num">63</p>
+
+      <div class="img" style="margin-right: 30px;">
+        <img src="{% static 'russal.png' %}" width="320px">
+      </div>
+      </div>
+      </a>
+    </div>
+
+      
+    <div class="wire">
+      <a href="https://www.formula1.com/en/drivers/kimi-antonelli">
+      <div class="link" style="color:whitesmoke; padding-left: 10px; font-family:Enriqueta; font-size: 20px;">
+      <h3>Kimi <br> Antonelli</h3>
+      <p>Mercedes</p>
+      <p class="num">12</p>
+
+      <div  class="im" style="margin-left: 160px;">
+        <img src="{% static 'kam2.png' %}" width="307px">
+      </div>
+      </div>
+      </a>
+    </div>
+</div>
+<br>
+<br>
+
+<div class="right">
+   
+    <div class="l">
+      <a href="https://www.formula1.com/en/drivers/lando-norris">
+      <div class="link" style="color:whitesmoke; padding-left: 10px; font-family:Enriqueta; font-size: 20px;">
+      <h3>Lando <br> Norris</h3>
+      <p>McLaren</p>
+      <p class="num">1</p>
+
+      <div class="img" style="margin-right: -60px;">
+        <img src="{% static 'lando.png' %}" width="530px">
+      </div>
+      </div>
+      </a>
+    </div> 
+
+      
+    <div class="l">
+      <a href="https://www.formula1.com/en/drivers/oscar-piastri">
+      <div class="link" style="color:whitesmoke; padding-left: 10px; font-family:Enriqueta; font-size: 20px;">
+      <h3>Oscar<br> Piastri </h3>
+      <p>McLaren</p>
+      <p class="num">81</p>
+
+      <div class="im" style="margin-left: 170px;">
+        <img src="{% static 'osc1.avif' %}" width="310px">
+      </div>
+      </div>
+      </a>
+    </div>
+</div>
+<br>
+<br>
+
+<div class="right">
+   
+    <div class="mx">
+      <a href="https://www.formula1.com/en/drivers/max-verstappen">
+      <div class="link" style="color:whitesmoke; padding-left: 10px; font-family:Enriqueta; font-size: 20px;">
+      <h3>Max <br> Verstappen</h3>
+      <p>Red Bull Racing</p>
+      <p class="num">3</p>
+
+      <div class="img" >
+        <img src="{% static 'max.avif' %}" width="310px">
+      </div>
+      </div>
+      </a>
+    </div> 
+
+      
+    <div class="mx">
+      <a href="https://www.formula1.com/en/drivers/isack-hadjar">
+      <div class="link" style="color:whitesmoke; padding-left: 10px; font-family:Enriqueta; font-size: 20px;">
+      <h3>Isack<br> Hadjar </h3>
+      <p>Red Bull Racing</p>
+      <p class="num">6</p>
+
+      <div class="im"  style="margin-left: 170px;">
+        <img src="{% static 'isahad2.png' %}" width="340px">
+      </div>
+      </div>
+      </a>
+    </div>
+</div>
+<br>
+<br>
+
+<div class="right">
+   
+    <div class="pg">
+      <a href="https://www.formula1.com/en/drivers/pierre-gasly">
+      <div class="link" style="color:whitesmoke; padding-left: 10px; font-family:Enriqueta; font-size: 20px;">
+      <h3>Pierre<br> Gasly</h3>
+      <p>Alpine</p>
+      <p class="num">10</p>
+
+      <div class="img" style="margin-right: 60px;">
+        <img src="{% static 'piegas.avif' %}" width="307px">
+      </div>
+      </div>
+      </a>
+    </div> 
+
+      
+    <div class="pg">
+      <a href="https://www.formula1.com/en/drivers/franco-colapinto">
+      <div class="link" style="color:whitesmoke; padding-left: 10px; font-family:Enriqueta; font-size: 20px;">
+      <h3>Franco<br>Colapinto</h3>
+      <p>Alpine</p>
+      <p class="num">43</p>
+
+      <div class="im" style="margin-left: 170px;">
+        <img src="{% static 'franco.avif' %}" width="310px">
+      </div>
+      </div>
+      </a>
+    </div>
+</div>
+<br>
+<br>
+
+<div class="right">
+   
+    <div class="lw">
+      <a href="https://www.formula1.com/en/drivers/liam-lawson">
+      <div class="link" style="color:whitesmoke; padding-left: 10px; font-family:Enriqueta; font-size: 20px;">
+      <h3>Liam<br> Lawson</h3>
+      <p>Racing Bulls</p>
+      <p class="num">30</p>
+
+      <div class="img" style="margin-right: 60px;">
+        <img src="{% static 'lawson.avif' %}" width="306px">
+      </div>
+      </div>
+      </a>
+    </div> 
+
+      
+    <div class="lw">
+      <a href="https://www.formula1.com/en/drivers/arvid-lindblad">
+      <div class="link" style="color:whitesmoke; padding-left: 10px; font-family:Enriqueta; font-size: 20px;">
+      <h3>Arvid<br>Lindblad</h3>
+      <p>Racing Bulls</p>
+      <p class="num">41</p>
+
+      <div class="im" style="margin-left: 170px;">
+        <img src="{% static 'arivd.png' %}" width="357px">
+      </div>
+      </div>
+      </a>
+    </div>
+</div>
+<br>
+<br>
+<div class="right">
+   
+    <div class="ec">
+      <a href="https://www.formula1.com/en/drivers/esteban-ocon">
+      <div class="link" style="color:whitesmoke; padding-left: 10px; font-family:Enriqueta; font-size: 20px;">
+      <h3>Esteban<br> Ocon</h3>
+      <p>Haas F1 Team</p>
+      <p class="num">31</p>
+
+      <div class="img" style="margin-right: 40px;">
+        <img src="{% static 'oco01.avif' %}" width="315px">
+      </div>
+      </div>
+      </a>
+    </div> 
+
+      
+    <div class="ec">
+      <a href="https://www.formula1.com/en/drivers/oliver-bearman">
+      <div class="link" style="color:whitesmoke; padding-left: 10px; font-family:Enriqueta; font-size: 20px;">
+      <h3>Oliver<br>Bearman</h3>
+      <p>Haas F1 Team</p>
+      <p class="num">87</p>
+
+      <div class="im" style="margin-left: 170px;">
+        <img src="{% static 'olibea.avif' %}" width="310px">
+      </div>
+      </div>
+      </a>
+    </div> 
+</div>
+<br>
+<br>
+
+<div class="right">
+   
+    <div class="cs">
+      <a href="https://www.formula1.com/en/drivers/carlos-sainz">
+      <div class="link" style="color:whitesmoke; padding-left: 10px; font-family:Enriqueta; font-size: 20px;">
+      <h3>Carlos<br> Sainz</h3>
+      <p>Williams</p>
+      <p class="num">55</p>
+
+      <div class="img" style="margin-right: 50px;">
+        <img src="{% static 'carsai.avif' %}" width="312px">
+      </div>
+      </div>
+      </a>
+    </div> 
+
+      
+    <div class="cs">
+      <a href="https://www.formula1.com/en/drivers/alexander-albon">
+      <div class="link" style="color:whitesmoke; padding-left: 10px; font-family:Enriqueta; font-size: 20px;">
+      <h3>Alexander<br>Albon</h3>
+      <p>Williams</p>
+      <p class="num">23</p>
+
+      <div class="im" style="margin-left: 170px;">
+        <img src="{% static 'alealb.avif' %}" width="312px">
+      </div>
+      </div>
+      </a>
+    </div> 
+</div>
+<br>
+<br>
+<div class="right">
+   
+    <div class="nh">
+      <a href="https://www.formula1.com/en/drivers/nico-hulkenberg">
+      <div class="link" style="color:whitesmoke; padding-left: 10px; font-family:Enriqueta; font-size: 20px;">
+      <h3>Nico<br> Hulkenberg</h3>
+      <p>Audi</p>
+      <p class="num">27</p>
+
+      <div class="img" style="margin-right: 20px;">
+        <img src="{% static 'nico.png' %}" width="404px">
+      </div>
+      </div>
+      </a>
+    </div> 
+
+      
+    <div class="nh">
+      <a href="https://www.formula1.com/en/drivers/gabriel-bortoleto">
+      <div class="link" style="color:whitesmoke; padding-left: 10px; font-family:Enriqueta; font-size: 20px;">
+      <h3>Gabriel<br>Bortoleto</h3>
+      <p>Audi</p>
+      <p class="num">5</p>
+
+      <div class="im" style="margin-left: 170px;">
+        <img src="{% static 'Gabriel.png' %}" width="319px">
+      </div>
+      </div>
+      </a>
+    </div> 
+</div>
+<br>
+<br>
+<div class="right">
+   
+    <div class="na">
+      <a href="https://www.formula1.com/en/drivers/fernando-alonso">
+      <div class="link" style="color:whitesmoke; padding-left: 10px; font-family:Enriqueta; font-size: 20px;">
+      <h3>NicoFernando<br> Alonso</h3>
+      <p>Aston Martin</p>
+      <p class="num">14</p>
+
+      <div class="img" style="margin-right: 30px;">
+        <img src="{% static 'alonson.avif' %}" width="320px">
+      </div>
+      </div>
+      </a>
+    </div> 
+
+      
+    <div class="na">
+      <a href="https://www.formula1.com/en/drivers/lance-stroll">
+      <div class="link" style="color:whitesmoke; padding-left: 10px; font-family:Enriqueta; font-size: 20px;">
+      <h3>Lance<br>Stroll</h3>
+      <p>Aston Martin</p>
+      <p class="num">18</p>
+
+      <div class="im" style="margin-left: 170px;">
+        <img src="{% static 'stroll.avif' %}" width="318px">
+      </div>
+      </div>
+      </a>
+    </div> 
+</div>
+<br>
+<br>
+<div class="right">
+   
+    <div class="sp">
+      <a href="https://www.formula1.com/en/drivers/sergio-perez">
+      <div class="link" style="color:whitesmoke; padding-left: 10px; font-family:Enriqueta; font-size: 20px;">
+      <h3>Sergio<br> Perez</h3>
+      <p>Cadillac</p>
+      <p class="num">11</p>
+
+      <div class="img" style="margin-right: 50px;">
+        <img src="{% static 'abab.png' %}" width="368px">
+      </div>
+      </div>
+      </a>
+    </div> 
+
+      
+    <div class="sp">
+      <a href="https://www.formula1.com/en/drivers/valtteri-bottas">
+      <div class="link" style="color:whitesmoke; padding-left: 10px; font-family:Enriqueta; font-size: 20px;">
+      <h3>Valtteri<br>Bottas</h3>
+      <p>Cadillac</p>
+      <p class="num">17</p>
+
+      <div class="im" style="margin-left: 120px;">
+        <img src="{% static 'qqqq.png' %}" width="380px">
+      </div>
+      </div>
+      </a>
+    </div> 
+</div>
+<br>
+<br>
+<div class="red">
+<h1>F1 TEAMS 2026</h1>
+<h5>Check out this season's official F1 line-up by following your favourite F1 teams on and off the track.
+</h5>
+</div>
+<br>
+
+   <div class="red-line"></div>
+<br>
+<div class="foot">
+  <div class="paper">
+    <h2 class="co" style="color:#ADD8E6;">CO-PARTNERS</h2>
+  </div>
+ 
+<div class="ll">
+  <a class="lu" href="https://www.lvmh.com/en"><h3>Lvmh</h3></a>
+  <a class="pi" href="https://www.pirelli.com/tyres/en-ww/motorsport/car/formula-1?utm_source=formula1.com&utm_medium=referral&utm_campaign=ww_motorsport_f1&utm_content=homepage"><h3>Pirelli</h3></a>
+  <a class="ar" href="https://www.aramco.com/"><h3>Aramco</h3></a>
+  <a class="he" href="https://www.heineken.com/in/en/agegateway/?returnUrl=%2fin%2fen%2fhome"><h3>Heineken</h3></a>
+  <a class="le" href="https://www.lenovo.com/in/en/"><h3>Lenovo</h3></a>
+  <a class="pu" href="https://eu.puma.com/de/en/sports/motorsport?utm_source=PP&utm_pricing=OTH&utm_medium=BM&utm_campaign=BM_All_PP_OTH_OTH_BRD_Motorsport_SS23_Formula1_F1-Website_NA_NA&utm_budget=global"><h3>Puma</h3></a>
+</div>
+<div id="red"></div>
+</div>
+
+<div class="middle">
+  <div class="louis"><a href="https://in.louisvuitton.com/eng-in/homepage"><img src="{% static 'lv.png' %}" width="100px" height="auto"></a></div>
+  <div class="nest"><a href="https://www.nestle.com/"><img src="{% static 'ns.png' %}" width="100px" height="100px"></a></div>
+  <div class="tmobile"><a href="https://www.t-mobile.com/?msockid=3653e332c6246f2b3f74f523c7e36e69"><img src="{% static 'tm.webp' %}" width="100px" height="50px"></a></div>
+  <div class="sf"><a href="https://www.salesforce.com/in/?ir=1"><img src="{% static 'sf.png' %}" width="100px" height="100px"></a></div>
+  
+</div>
+
+<script>
+$(document).ready(function () {
+  const $toggle = $('#menuToggle');
+  const $navList = $('#navList');
+
+  $toggle.on('click', function () {
+    $toggle.toggleClass('active');
+    $navList.toggleClass('show');
+    $('body').toggleClass('menu-open');
+  });
+
+  $navList.find('a').on('click', function () {
+    $toggle.removeClass('active');
+    $navList.removeClass('show');
+    $('body').removeClass('menu-open');
+  });
+});
+</script>
+
+</body>
+</html>

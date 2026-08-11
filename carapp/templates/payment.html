@@ -1,0 +1,605 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="{% static 'icon.png' %}">
+  <title>Review Your Order | F1 TV</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<style>
+:root{
+    --f1-red:#e10600;
+    --f1-red-dark:#b50000;
+    --ink:#15151e;
+    --cream:#f1efe9;
+    --line:#dcdad2;
+    --muted:#6b6b6b;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Oswald',Arial,Helvetica,sans-serif;}
+
+body{background:var(--cream);color:var(--ink);}
+
+h1,h2,h3{font-family:'Russo One',Arial,sans-serif;}
+
+a{color:inherit;}
+
+/* ---------- Top bar ---------- */
+.topbar{
+    background:var(--ink);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 40px;
+}
+
+.topbar .logo-fallback{
+    color:var(--f1-red);
+    font-family:'Russo One',sans-serif;
+    font-size:26px;
+    letter-spacing:1px;
+}
+
+.topbar img{height:40px;display:block;}
+
+.auth-actions{display:flex;gap:12px;}
+
+.btn-outline{
+    background:transparent;
+    border:1px solid #fff;
+    color:#fff;
+    padding:9px 22px;
+    font-size:13px;
+    letter-spacing:1px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.btn-outline:hover{background:#fff;color:var(--ink);}
+
+.btn-outline.solid{
+    background:var(--f1-red);
+    border-color:var(--f1-red);
+}
+
+.btn-outline.solid:hover{background:var(--f1-red-dark);border-color:var(--f1-red-dark);}
+
+/* ---------- Sub nav ---------- */
+.subnav{
+    background:#2a2a35;
+    display:flex;
+    justify-content:center;
+    gap:50px;
+    padding:16px 0;
+}
+
+.subnav a{
+    text-decoration:none;
+    font-size:14px;
+    font-weight:600;
+    letter-spacing:.5px;
+    color:#fff;
+    padding-bottom:4px;
+    border-bottom:2px solid transparent;
+}
+
+.subnav a.active,.subnav a:hover{border-bottom:2px solid var(--f1-red);}
+
+/* ---------- Main ---------- */
+.wrap{
+    max-width:600px;
+    margin:0 auto;
+    padding:55px 20px 90px;
+}
+
+.page-title{
+    font-size:30px;
+    letter-spacing:.5px;
+    padding-bottom:14px;
+    border-bottom:1px solid var(--line);
+    margin-bottom:26px;
+}
+
+.section-label{
+    font-family:'Russo One',sans-serif;
+    font-size:19px;
+    letter-spacing:.5px;
+    margin:34px 0 16px;
+}
+
+/* order summary card */
+.order-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:26px 28px;
+}
+
+.order-head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:18px;
+}
+
+.order-head .plan-name{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    font-size:24px;
+}
+
+.order-head .plan-name span.f1mark{
+    color:var(--f1-red);
+    font-family:'Russo One',sans-serif;
+    font-size:20px;
+}
+
+.order-head a{
+    color:var(--f1-red);
+    font-size:14px;
+    font-weight:600;
+    text-decoration:underline;
+    text-underline-offset:3px;
+}
+
+.order-row{
+    display:flex;
+    justify-content:space-between;
+    padding:14px 0;
+    border-bottom:1px solid var(--line);
+    font-size:15px;
+}
+
+.order-row:last-child{border-bottom:none;}
+
+.order-row .label{color:var(--muted);}
+
+.order-row .value{font-weight:600;}
+
+.order-row.total .value{font-size:26px;font-family:'Russo One',sans-serif;}
+
+.order-row .strike{color:var(--muted);text-decoration:line-through;font-weight:400;margin-right:10px;font-size:14px;}
+
+/* voucher */
+.voucher-box input{
+    width:100%;
+    padding:16px 14px;
+    border:1px solid var(--ink);
+    border-radius:3px;
+    font-size:15px;
+    background:#fff;
+}
+
+.voucher-box input:focus{outline:2px solid var(--f1-red);}
+
+.voucher-actions{display:flex;gap:14px;margin-top:16px;}
+
+.voucher-actions button{
+    padding:13px 28px;
+    border:none;
+    border-radius:3px;
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:1px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.btn-cancel{background:var(--ink);color:#fff;}
+.btn-cancel:hover{background:#000;}
+
+.btn-apply{background:var(--f1-red);color:#fff;}
+.btn-apply:hover{background:var(--f1-red-dark);}
+
+.voucher-msg{margin-top:12px;font-size:14px;font-weight:600;display:none;}
+.voucher-msg.ok{color:#0a8a3a;display:block;}
+.voucher-msg.err{color:var(--f1-red);display:block;}
+
+/* payment card */
+.pay-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:28px;
+}
+
+.pay-card .card-brands{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin-bottom:22px;
+    font-size:15px;
+    font-weight:600;
+}
+
+.card-brands i{font-size:26px;color:#333;}
+.card-brands i.fa-cc-amex{color:#2e77bc;}
+.card-brands i.fa-cc-visa{color:#1a1f71;}
+.card-brands i.fa-cc-mastercard{color:#eb001b;}
+
+label.field-label{
+    display:block;
+    font-size:14px;
+    margin-bottom:8px;
+    color:var(--ink);
+}
+
+.input,.select{
+    width:100%;
+    padding:14px;
+    border:1px solid #b9b9b9;
+    border-radius:3px;
+    font-size:15px;
+    background:#fff;
+    font-family:'Oswald',sans-serif;
+}
+
+.input:focus,.select:focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 2px rgba(0,0,0,.08);}
+
+.field{margin-bottom:20px;}
+
+.two-col{display:flex;gap:18px;}
+.two-col .field{flex:1;}
+
+.input-icon{position:relative;}
+.input-icon i{
+    position:absolute;
+    right:14px;top:50%;
+    transform:translateY(-50%);
+    color:#999;
+    font-size:14px;
+}
+
+/* billing */
+.billing-card{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:28px;
+}
+
+.note{
+    color:#555;
+    font-size:13px;
+    line-height:1.8;
+    margin:26px 0;
+}
+
+.note a{color:var(--f1-red);text-decoration:underline;}
+
+.agree{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    margin-bottom:30px;
+}
+
+.agree input{margin-top:4px;width:16px;height:16px;accent-color:var(--f1-red);cursor:pointer;}
+
+.agree label{font-size:14px;line-height:1.7;cursor:pointer;}
+
+.agree a{color:var(--f1-red);text-decoration:underline;}
+
+.complete-btn{
+    width:100%;
+    padding:18px;
+    border:none;
+    border-radius:3px;
+    background:#c9c9c9;
+    color:#8a8a8a;
+    font-size:15px;
+    font-weight:700;
+    letter-spacing:1px;
+    cursor:not-allowed;
+    transition:.25s;
+}
+
+.complete-btn.ready{
+    background:var(--f1-red);
+    color:#fff;
+    cursor:pointer;
+}
+
+.complete-btn.ready:hover{background:var(--f1-red-dark);}
+
+/* confirmation */
+.confirm-box{
+    display:none;
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:40px 30px;
+    text-align:center;
+}
+
+.confirm-box i{font-size:46px;color:#0a8a3a;margin-bottom:14px;}
+.confirm-box h2{font-size:24px;margin-bottom:10px;}
+.confirm-box p{color:var(--muted);font-size:15px;}
+
+/* ---------- Footer ---------- */
+.footer{width:100%;background:#000;padding:50px 80px;margin-top:80px;}
+.footer-logo{text-align:center;margin-bottom:30px;}
+.footer-logo .f1mark{color:var(--f1-red);font-family:'Russo One',sans-serif;font-size:30px;}
+.footer hr{border:1px solid #222;margin:25px 0;}
+.footer-links{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:40px;}
+.footer-links a{color:#fff;text-decoration:none;font-size:15px;transition:.3s;}
+.footer-links a:hover{color:var(--f1-red);}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:20px;flex-wrap:wrap;gap:14px;}
+.lang-select a{color:#999;text-decoration:none;font-size:13px;margin-right:14px;font-weight:600;}
+.lang-select a.active{color:#fff;border-bottom:1px solid var(--f1-red);}
+.copyright{color:#999;font-size:13px;}
+
+@media (max-width:640px){
+  .topbar{padding:14px 18px;}
+  .subnav{gap:26px;}
+  .two-col{flex-direction:column;gap:0;}
+  .footer{padding:35px 20px;}
+  .footer-bottom{flex-direction:column;text-align:center;}
+}
+</style>
+
+<body>
+
+  <!-- ================= TOP BAR ================= -->
+  <div class="topbar">
+    <a href="{% url 'index' %}" style="text-decoration:none;"> 
+      <img src="{% static 'Logo.png' %}" alt="F1 TV" onerror="this.style.display='none';this.nextElementSibling.style.display='inline'">
+      <span class="logo-fallback" style="display:none;">F1&nbsp;TV</span>
+    </a>
+    <div class="auth-actions">
+      <button class="btn-outline" id="loginBtn" onclick="toggleAuth(true)">LOGIN</button>
+      <button class="btn-outline solid" id="logoutBtn" style="display:none;" onclick="toggleAuth(false)">LOGOUT</button>
+    </div>
+  </div>
+
+  <div class="subnav">
+    <a href="#" class="active">My Account</a>
+    
+  </div>
+
+  <!-- ================= MAIN ================= -->
+  <div class="wrap">
+
+    <h1 class="page-title">REVIEW YOUR ORDER</h1>
+
+    <div class="order-card">
+      <div class="order-head">
+        <div class="plan-name"><span class="f1mark">🏁</span> <span id="planNameOut">Ultimate</span></div>
+        <a href="{% url 'payment' %}#pricing">Modify order</a>
+      </div>
+
+      <div class="order-row">
+        <span class="label">Plan Type</span>
+        <span class="value" id="planTypeOut">Ultimate</span>
+      </div>
+      <div class="order-row">
+        <span class="label">Renewal cycle</span>
+        <span class="value" id="cycleOut">Yearly</span>
+      </div>
+      <div class="order-row total">
+        <span class="label">Total</span>
+        <span class="value"><span class="strike" id="strikeOut" style="display:none;"></span><span id="totalOut">₹7,999</span></span>
+      </div>
+    </div>
+
+    <h2 class="section-label">VOUCHER CODE</h2>
+    <div class="voucher-box">
+      <input type="text" id="voucherInput" placeholder="Enter voucher code">
+      <div class="voucher-actions">
+        <button class="btn-cancel" onclick="cancelVoucher()">CANCEL</button>
+        <button class="btn-apply" onclick="applyVoucher()">APPLY</button>
+      </div>
+      <div class="voucher-msg" id="voucherMsg"></div>
+    </div>
+
+    <h2 class="section-label">PAYMENT</h2>
+    <div class="pay-card">
+      <div class="card-brands">
+        <span>Card</span>
+        <i class="fa-brands fa-cc-amex"></i>
+        <i class="fa-brands fa-cc-visa"></i>
+        <i class="fa-brands fa-cc-mastercard"></i>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Card number</label>
+        <input type="text" class="input" id="cardNumber" placeholder="1234 1234 1234 1234" maxlength="19" inputmode="numeric">
+      </div>
+
+      <div class="two-col">
+        <div class="field">
+          <label class="field-label">Expiry date</label>
+          <input type="text" class="input" id="expiry" placeholder="MM/YY" maxlength="5" inputmode="numeric">
+        </div>
+        <div class="field">
+          <label class="field-label">Security code</label>
+          <div class="input-icon">
+            <input type="text" class="input" id="cvc" placeholder="CVC" maxlength="4" inputmode="numeric">
+            <i class="fa-solid fa-credit-card"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <h2 class="section-label">BILLING ADDRESS</h2>
+    <div class="billing-card">
+      <div class="field">
+        <label class="field-label">Billing name</label>
+        <input type="text" class="input" id="billingName" placeholder="Full name on card" required>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Country or region</label>
+        <select class="select" id="country" required></select>
+      </div>
+
+      <div class="field" style="margin-bottom:0;">
+        <label class="field-label">Address</label>
+        <input type="text" class="input" id="address" placeholder="Street address, city, PIN code" required>
+      </div>
+    </div>
+
+    <div class="note">
+      <p>F1 TV subscriptions automatically renew if not cancelled prior to renewal. By placing the order, you agree to enroll in automatic renewal subscription. Review the <a href="{% url 'payment' %}#pricing">Subscription Terms</a> for details.</p>
+    </div>
+
+    <div class="agree">
+      <input type="checkbox" id="agreeCheck" onchange="validateForm()">
+      <label for="agreeCheck">I have read and agree to <a href="https://account.formula1.com/#/en/terms-of-use">Terms and Conditions</a>, <a href="https://account.formula1.com/#/en/privacy-policy">Privacy Policy</a> and <a href="https://account.formula1.com/#/en/subscription-terms.mobile">Subscription Terms</a></label>
+    </div>
+
+    <button class="complete-btn" id="completeBtn" onclick="completeOrder()" disabled>COMPLETE ORDER</button>
+
+    <div class="confirm-box" id="confirmBox">
+      <i class="fa-solid fa-circle-check"></i>
+      <h2>Order Confirmed</h2>
+      <p id="confirmDetail">Your F1 TV subscription is now active.</p>
+    </div>
+
+  </div>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="footer">
+    <div class="footer-logo"><span class="f1mark">FORMULA 1</span></div>
+    <hr>
+    <div class="footer-links">
+      <a href="https://account.formula1.com/#/en/privacy-policy">Privacy Policy</a>
+      <a href="https://account.formula1.com/#/en/subscription-terms.mobile">Subscription</a>
+      <a href="https://account.formula1.com/#/en/terms-of-use">Terms Of Use</a>
+      <a href="https://f1help.formula1.com/?language=en_US">F1 Help</a>
+      <a href="https://account.formula1.com/#/en/cookie-policy">Cookie Preferences</a>
+    </div>
+    <hr>
+    <div class="footer-bottom"> 
+      <div class="copyright">© 2003-2026 Formula One World Championship Limited</div>
+    </div>
+  </footer>
+
+<script>
+/* ---------------- Plan pricing in INR (matches the plans on the pricing page) ---------------- */
+const PLAN_PRICING = {
+  basic:    { name: "Basic",    monthly: 199, yearly: 1999 },
+  premium:  { name: "Premium",  monthly: 499, yearly: 4999 },
+  ultimate: { name: "Ultimate", monthly: 799, yearly: 7999 }
+};
+
+const params = new URLSearchParams(window.location.search);
+const planKey  = (params.get("plan")  || "ultimate").toLowerCase();
+const cycleKey = (params.get("cycle") || "yearly").toLowerCase();
+
+const plan = PLAN_PRICING[planKey] || PLAN_PRICING.ultimate;
+const cycle = (cycleKey === "monthly") ? "monthly" : "yearly";
+let basePrice = plan[cycle];
+let currentTotal = basePrice;
+
+function formatINR(n){
+  return "₹" + Math.round(n).toLocaleString("en-IN");
+}
+
+function renderOrder(){
+  document.getElementById("planNameOut").textContent = plan.name;
+  document.getElementById("planTypeOut").textContent = plan.name;
+  document.getElementById("cycleOut").textContent = cycle === "monthly" ? "Monthly" : "Yearly";
+  document.getElementById("totalOut").textContent = formatINR(currentTotal);
+}
+renderOrder();
+
+/* ---------------- Voucher ---------------- */
+function applyVoucher(){
+  const code = document.getElementById("voucherInput").value.trim().toUpperCase();
+  const msg = document.getElementById("voucherMsg");
+  if(code === "F1SAVE10"){
+    currentTotal = basePrice * 0.9;
+    document.getElementById("strikeOut").style.display = "inline";
+    document.getElementById("strikeOut").textContent = formatINR(basePrice);
+    document.getElementById("totalOut").textContent = formatINR(currentTotal);
+    msg.textContent = "Voucher applied — 10% off!";
+    msg.className = "voucher-msg ok";
+  } else {
+    msg.textContent = "Invalid or expired voucher code.";
+    msg.className = "voucher-msg err";
+  }
+}
+
+function cancelVoucher(){
+  document.getElementById("voucherInput").value = "";
+  document.getElementById("voucherMsg").className = "voucher-msg";
+  document.getElementById("strikeOut").style.display = "none";
+  currentTotal = basePrice;
+  document.getElementById("totalOut").textContent = formatINR(currentTotal);
+}
+
+/* ---------------- Card input formatting ---------------- */
+document.getElementById("cardNumber").addEventListener("input", function(e){
+  let v = e.target.value.replace(/\D/g,"").slice(0,16);
+  e.target.value = v.replace(/(.{4})/g,"$1 ").trim();
+});
+
+document.getElementById("expiry").addEventListener("input", function(e){
+  let v = e.target.value.replace(/\D/g,"").slice(0,4);
+  if(v.length >= 3) v = v.slice(0,2) + "/" + v.slice(2);
+  e.target.value = v;
+});
+
+document.getElementById("cvc").addEventListener("input", function(e){
+  e.target.value = e.target.value.replace(/\D/g,"").slice(0,4);
+});
+
+/* ---------------- Country list ---------------- */
+const COUNTRIES = ["India","United States","United Kingdom","United Arab Emirates","Australia","Austria","Belgium","Brazil","Canada","China","Denmark","Finland","France","Germany","Hong Kong SAR China","Indonesia","Ireland","Italy","Japan","Malaysia","Mexico","Netherlands","New Zealand","Norway","Philippines","Poland","Portugal","Qatar","Russia","Saudi Arabia","Singapore","South Africa","South Korea","Spain","Sri Lanka","Sweden","Switzerland","Thailand","Turkey"];
+const countrySel = document.getElementById("country");
+COUNTRIES.forEach(c=>{
+  const opt = document.createElement("option");
+  opt.value = c; opt.textContent = c;
+  if(c === "India") opt.selected = true;
+  countrySel.appendChild(opt);
+});
+
+/* ---------------- Form validation / submit ---------------- */
+function validateForm(){
+  const agreed = document.getElementById("agreeCheck").checked;
+  const btn = document.getElementById("completeBtn");
+  btn.disabled = !agreed;
+  btn.className = agreed ? "complete-btn ready" : "complete-btn";
+}
+
+function completeOrder(){
+  const name = document.getElementById("billingName").value.trim();
+  const address = document.getElementById("address").value.trim();
+  const cardNumber = document.getElementById("cardNumber").value.trim();
+  const expiry = document.getElementById("expiry").value.trim();
+  const cvc = document.getElementById("cvc").value.trim();
+
+  if(!name || !address || !cardNumber || !expiry || !cvc){
+    alert("Please fill in all payment and billing details.");
+    return;
+  }
+
+  document.querySelector(".wrap").querySelectorAll(".order-card,.voucher-box,.pay-card,.billing-card,.note,.agree,.complete-btn,.section-label").forEach(el=>{
+    el.style.display = "none";
+  });
+
+  const confirmBox = document.getElementById("confirmBox");
+  confirmBox.style.display = "block";
+  document.getElementById("confirmDetail").textContent =
+    `${plan.name} (${cycle === "monthly" ? "Monthly" : "Yearly"}) — ${formatINR(currentTotal)} charged to ${document.getElementById("country").value}.`;
+}
+
+/* ---------------- Login / Logout toggle (demo) ---------------- */
+function toggleAuth(isLoggingIn){
+  document.getElementById("loginBtn").style.display = isLoggingIn ? "none" : "inline-block";
+  document.getElementById("logoutBtn").style.display = isLoggingIn ? "inline-block" : "none";
+}
+</script>
+
+</body>
+</html>

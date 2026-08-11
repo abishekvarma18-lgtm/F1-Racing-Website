@@ -1,0 +1,119 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    
+}
+
+.scene{
+    width:700px;
+    height:400px;
+    position:relative;
+    border:2px solid #fff;
+    overflow:hidden;
+}
+
+.character{
+    position:absolute;
+    bottom:85px;
+    left:150px;
+    font-size:70px;
+    animation:drive 1s linear forwards;
+}
+
+@keyframes drive{
+    from{
+        left:150px;
+    }
+    to{
+        left:290px;
+    }
+}
+
+body{
+    background-image: url(varma.jpeg);
+        background-size:cover;
+    background-position:center;
+}
+
+.scene{
+    background-color: rgba(255,255,255,0.10);
+    border-radius: 10px;
+    border: none;
+    background:linear-gradient(255,#181818,#222);
+}
+
+.login-card{
+    background:#181818;
+    color:white;
+    border-left:5px solid #e10600;
+}
+
+.box{
+    width:30px;
+    height:30px;
+    background:       
+        #111 0px,
+        #111 20px,
+        #222 20px,
+        #222 40px;
+    position:absolute;
+    left:330px;
+    bottom:110px;
+    border-radius:4px;
+}
+
+
+ .login-card{
+    position:absolute;
+    top:50%;
+    left:50%;
+
+    width:320px;
+    padding:30px;
+
+    
+    border-radius:15px;
+
+    opacity:0;
+    transform:translate(-50%, -50%) scale(0);
+    transition:.8s;
+}
+
+
+.login-card.show{
+    opacity:1;
+    transform:translate(-50%,-50%) scale(1);
+}
+
+.login-card h2{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.login-card input{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:1px solid #ccc;
+    border-radius:8px;
+}
+
+.login-card button{
+    width:100%;
+    padding:12px;
+    border:none;
+    background:#2563eb;
+    color:white;
+    border-radius:8px;
+    cursor:pointer;
+}
+

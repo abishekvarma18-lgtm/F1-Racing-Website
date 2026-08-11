@@ -1,0 +1,1256 @@
+{% load static %} 
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="{% static 'icon.png' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Teams</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+
+<style>
+   *{
+    box-sizing: border-box;
+  }
+
+   body{
+    background-color:#0B0F1A; 
+     padding-top:100px;
+  }
+
+  .home{
+    background-color: black;  
+    color: white;
+    height: auto;
+    margin: 10px;
+    margin-top: 10px;
+    border-radius: 10px;
+    position:relative;
+    background-image:
+    linear-gradient(
+      rgba(0,0,0,0.65),
+      rgba(0,0,0,0.65)),
+    url("{% static 'ff.png' %}");
+
+   background-size: cover;
+   background-position: center;
+  }
+
+li a {
+  white-space: wrap;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+li{
+  list-style: none;
+}
+.one {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+  
+}
+
+  .one{
+    padding-top: 30px;
+  }
+  .one{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+
+    display: grid;
+    grid-template-columns: 120px 1fr 120px;
+    align-items: center;
+
+    padding: 25px 40px;
+    background-color: black;
+}
+
+
+a {
+  text-decoration: none;
+  color: white;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.bb {
+  background-color: red; 
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.navbar-brand {
+  margin-right: 20px;
+}
+ol {
+  display: flex;
+  gap: clamp(15px, 3vw, 50px);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+}
+
+.navbar-brand {
+  margin-right: 60px;
+}
+
+.button {
+  margin-left: 60px;
+}
+
+li a {
+  color: white;
+  font-size: 18px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+li a:hover {
+  color: #ff1801;
+}
+
+
+.menu-toggle{
+  display:none;
+  background:none;
+  border:none;
+  cursor:pointer;
+  width:32px;
+  height:26px;
+  padding:0;
+  position:relative;
+  z-index:10001;
+  justify-self:end;
+}
+
+.menu-toggle span{
+  display:block;
+  position:absolute;
+  left:0;
+  width:100%;
+  height:3px;
+  background:white;
+  border-radius:3px;
+  transition:0.3s ease;
+}
+
+.menu-toggle span:nth-child(1){ top:0; }
+.menu-toggle span:nth-child(2){ top:11px; }
+.menu-toggle span:nth-child(3){ top:22px; }
+
+.menu-toggle.active span:nth-child(1){
+  top:11px;
+  transform:rotate(45deg);
+  background:#ff1801;
+}
+.menu-toggle.active span:nth-child(2){
+  opacity:0;
+}
+.menu-toggle.active span:nth-child(3){
+  top:11px;
+  transform:rotate(-45deg);
+  background:#ff1801;
+}
+
+
+
+@media (max-width:768px){
+
+.one{
+    display:flex;
+    flex-direction:row;
+    align-items:center;
+    justify-content:space-between;
+    padding:15px 20px;
+}
+
+.menu-toggle{
+    display:block;
+}
+
+.navbar-brand,
+.mobile-actions{
+    position:relative;
+    z-index:10002;
+}
+
+.mobile-actions{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+ol{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:0;
+    margin:0;
+    padding:0;
+
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100vh;
+    background:rgba(0,0,0,0.97);
+
+    transform:translateY(-100%);
+    opacity:0;
+    visibility:hidden;
+    transition:transform 0.35s ease, opacity 0.35s ease, visibility 0.35s;
+    z-index:10000;
+}
+
+ol.show{
+    transform:translateY(0);
+    opacity:1;
+    visibility:visible;
+}
+
+ol li{
+    padding:18px 0;
+}
+
+ol li a{
+    font-size:22px;
+}
+
+.button{
+    margin:0;
+}
+
+.button .bb{
+    padding:8px 14px;
+    font-size:14px;
+}
+
+}
+
+@media (max-width: 768px) {
+  .right{
+    flex-direction: column !important;
+    align-items: center !important;
+    margin-left: 0 !important;
+    gap: 15px !important;
+    padding: 0 15px !important;
+  }
+
+  .card,
+  .merc,.mcl,.rr,.alp,.rb,.hass,.will,.audi,.am,.cad{
+    width: 100% !important;
+    max-width: 400px !important;
+    height: auto !important;
+    min-height: 220px !important;
+    margin-left: 0 !important;
+  }
+
+  .link{
+    padding: 15px !important;
+    font-size: 16px !important;
+  }
+
+  .drivers{
+    flex-direction: column !important;
+    gap: 10px !important;
+    align-items: flex-start !important;
+  }
+
+  .driver{
+    gap: 8px !important;
+  }
+
+  .avatar{
+    width: 45px !important;
+    height: 45px !important;
+  }
+
+  .img,
+  .i{
+    position: static !important;
+    margin: 10px 0 0 0 !important;
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  .img img,
+  .i img{
+    width: 100% !important;
+    max-width: 220px !important;
+    height: auto !important;
+    margin: 0 !important;
+    margin-left: 0 !important;
+    margin-top: 0 !important;
+  }
+}
+
+
+h2{
+  font-family: Cabin Sketch;
+  color: #ff1801;
+  padding: 30px;
+  padding-top: 80px;
+}
+.book{
+  font-family: Cabin Sketch;
+  color: #ff1801;
+  padding-left: 30px;
+}
+
+.right{
+    display:flex;
+    flex-wrap:wrap;
+    gap:25px;
+    margin-left:30px;
+}
+
+.card{
+  width: 665px;
+  height: 300px;
+    background:
+        linear-gradient(
+            90deg,
+            #730018 0%,
+            #3a0010 45%,
+            #85001f 75%,
+            #ff0033 100%
+        );
+    border-radius: 16px;
+    border: none;
+    margin-left: 30px;
+    display: flex;
+    position: relative;
+    transition:all .4s ease;
+    cursor:pointer;
+    transform:skewX(deg);
+    animation:dotsMove 12s linear infinite;   
+}
+@keyframes dotsMove{
+    from{
+        background-position:0 0;
+    }
+
+    to{
+        background-position:120px 0;
+    }
+}
+.merc,.mcl,.rr,.alp,.rb,.hass,.will,.audi,.am,.cad{
+  width: 665px;
+  height: 300px;
+  background: linear-gradient(
+    90deg,
+    #08856F 0%,
+    #0A8B75 40%,
+    #18C9B7 75%,
+    #4EF5E7 100%
+);
+    border-radius: 16px;
+    border: none;
+    margin-left: 30px;
+    display: flex;
+    position: relative;
+    transition:all .4s ease;
+    cursor:pointer;
+    transform:skewX(deg);
+    animation:dotsMove 12s linear infinite;   
+}
+@keyframes dotsMove{
+    from{
+        background-position:0 0;
+    }
+
+    to{
+        background-position:120px 0;
+    }
+}
+.card:hover{
+    transform:translateY(10px) scale(1.02);
+    box-shadow:
+    0 20px 40px rgba(255, 3, 3, 0.548),
+    0 0 30px rgba(255, 0, 0, 0.578);
+}
+.merc:hover{
+    transform:translateY(-10px) scale(1.02);
+    box-shadow:
+    0 20px 40px rgba(4, 242, 255, 0.477),
+    0 0 30px rgba(56, 222, 231, 0.1);
+}
+.mcl:hover{
+    transform:translateY(-10px) scale(1.02);
+    box-shadow:
+    0 20px 40px rgba(255, 196, 0, 0.46),
+    0 0 30px rgba(255,255,255,.1);
+}
+.rr:hover{
+    transform:translateY(-10px) scale(1.02);
+    box-shadow:
+    0 20px 40px rgba(0, 106, 255, 0.46),
+    0 0 30px rgba(255,255,255,.1);
+}
+.alp:hover{
+    transform:translateY(-10px) scale(1.02);
+    box-shadow:
+    0 20px 40px rgba(0, 162, 255, 0.437),
+    0 0 30px rgba(255,255,255,.1);
+}
+.rb:hover{
+    transform:translateY(-10px) scale(1.02);
+    box-shadow:
+    0 20px 40px rgba(0, 162, 255, 0.432),
+    0 0 30px rgba(255,255,255,.1);
+}
+.hass:hover{
+    transform:translateY(-10px) scale(1.02);
+    box-shadow:
+    0 20px 40px rgba(255, 255, 255, 0.477),
+    0 0 30px rgba(255,255,255,.1);
+}
+.will:hover{
+    transform:translateY(-10px) scale(1.02);
+    box-shadow:
+    0 20px 40px rgba(2, 43, 251, 0.458),
+    0 0 30px rgba(255,255,255,.1);
+}
+.audi:hover{
+    transform:translateY(-10px) scale(1.02);
+    box-shadow:
+    0 20px 40px rgba(247, 55, 2, 0.523),
+    0 0 30px rgba(255,255,255,.1);
+}
+.am:hover{
+    transform:translateY(-10px) scale(1.02);
+    box-shadow:
+    0 20px 40px rgba(0, 255, 76, 0.562),
+    0 0 30px rgba(255,255,255,.1);
+}
+.cad:hover{
+    transform:translateY(-10px) scale(1.02);
+    box-shadow:
+    0 20px 40px rgba(255, 254, 254, 0.522),
+    0 0 30px rgba(0, 0, 0, 0.642);
+}
+
+.mcl{
+  background: linear-gradient(
+    90deg,
+    #8A4500 0%,
+    #A85600 35%,
+    #D97700 70%,
+    #FF9800 100%
+);
+}
+.rr{
+
+background: linear-gradient(
+    90deg,
+    #142F5F 0%,
+    #1A3D78 40%,
+    #2A5BA8 75%,
+    #4A86E8 100%
+);
+}
+.alp{
+background: linear-gradient(
+    90deg,
+    #045B85 0%,
+    #0A6E99 40%,
+    #00A2E8 75%,
+    #1DB8FF 100%
+);
+}
+.rb{
+background: linear-gradient(
+    90deg,
+    #123CC8 0%,
+    #1849E0 40%,
+    #2962FF 75%,
+    #7DA2FF 100%
+);
+}
+.hass{
+background: linear-gradient(
+    90deg,
+    #6F7A80 0%,
+    #88939A 40%,
+    #AEB8BE 75%,
+    #E4E8EB 100%
+);
+}
+.will{
+background: linear-gradient(
+    90deg,
+    #002A66 0%,
+    #003D99 40%,
+    #0066E6 75%,
+    #4DA3FF 100%
+);
+}
+.audi{
+background: linear-gradient(
+    90deg,
+    #8B1600 0%,
+    #A31C00 40%,
+    #D12A00 75%,
+    #FF4500 100%
+);
+}
+.am{
+background: linear-gradient(
+    90deg,
+    #00503F 0%,
+    #006B55 40%,
+    #0D8F73 75%,
+    #39D6B0 100%
+);
+}
+.cad{
+background: linear-gradient(
+    90deg,
+    #66666B 0%,
+    #7A7A80 40%,
+    #A6A6AC 75%,
+    #E0E0E4 100%
+);
+}
+
+
+
+
+
+.drivers{
+    display:flex;
+    align-items:center;
+    gap:50px;
+}
+
+.driver{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.avatar{
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    object-fit:cover;
+}
+.img{
+  margin: -100px;
+}
+
+.red{
+  width: 1470px;
+  height: 300px;
+  background-color: red;
+  margin-left: 20px;
+  border-radius: 20px;
+  color: whitesmoke;
+  padding-top: 160px;
+  padding-left: 20px;
+}
+.but{
+  border-radius: 30px;
+  background-color:red;
+  color: whitesmoke;
+  border-color: red;
+  box-shadow: #000000;
+}
+
+
+.foot{
+  width: 100%;
+  height: auto;
+  background-color: #1E2230;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  padding: 20px 0;
+  margin-bottom: 20px;
+}
+.co{
+  padding: 20px;
+  font-family: EB Garamond;
+}
+.ll {
+  display:flex;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  text-align: center;
+}
+.ll {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); 
+  gap: 20px;
+  padding: 20px;
+  text-align: center;
+}
+.ll a {
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+
+.ll div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.lu,.pi,.ar,.le,.he,.pu{
+  padding-right: 80px;
+}
+.lu{
+  padding-left: 100px;
+
+}
+
+
+
+
+.middle{
+  width: 100%;
+  height: 230px;
+  background-color:#3A3B42;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  margin-top: -45px;
+  display:flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 30px;
+  gap: 100px;
+  align-items:center;
+}
+.middle div {
+  flex: 0 0 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+.paper{
+  display: flex;
+  margin-bottom:60px;
+}
+
+
+
+
+
+
+@media (max-width: 768px){
+
+  .middle{
+    margin:0%;
+    margin-top: 30px ;
+    padding: 0%;
+  }
+
+  .louis,.nest,.tmobile,.sf{
+   padding-left:20px;
+  }
+ 
+  .paper {
+  margin-bottom:10px;
+}
+
+.paper {
+  display: flex;
+  justify-content:space-between ;
+  align-items: center;
+  width: 100%;
+  padding: 10px 16px;
+}
+.co {
+  margin-bottom: 0px;
+}
+
+
+.co {
+  font-weight: bold;
+  padding: 0 16px;
+  white-space: nowrap;
+  font-size: 16px;
+}
+.lu,.pi,.ar,.he,.le,.pu{
+  padding-left:0px;
+  padding:-0%;
+}
+  .ll {
+    grid-template-columns: repeat(2, 1fr);
+    padding-left: 100px;
+  }
+}
+@media (max-width: 768px) {
+
+  .middle {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+  }
+
+  .middle div {
+    width: 30%; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+    .middle div:nth-child(4),
+  .middle div:nth-child(5) {
+    width: 45%;
+  }
+
+    .red{
+    width: 450px;
+    height: 200px;
+    padding: 20px;
+    }
+}
+
+.paper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 16px;
+  margin-bottom: 10px;
+}
+
+.co {
+   padding: 20px;
+  color: #ADD8E6;
+  font-weight: bold;
+}
+
+#red{
+    width:100%;
+    height:5px;
+    position:relative;
+    overflow:hidden;
+    background:#111;
+}
+
+#red::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:-20%;
+    width:20%;
+    height:100%;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        red,
+        white,
+        red,
+        transparent
+    );
+
+    animation:racingline 2s linear infinite;
+    box-shadow:0 0 20px red;
+}
+@keyframes racingline{
+    0%{
+        left:-20%;
+    }
+
+    100%{
+        left:120%;
+    }
+}
+.red-line{
+    width:100%;
+    height:4px;
+    background:linear-gradient(
+        90deg,
+        transparent,
+        red,
+        white,
+        red,
+        transparent
+    );
+    background-size:200% 100%;
+    animation:f1line 3s linear infinite;
+    box-shadow:0 0 10px red;
+    border-radius:10px;
+}
+@keyframes f1line{
+    0%{
+        background-position:200% 0;
+    }
+
+    100%{
+        background-position:-200% 0;
+    }
+}
+
+
+
+.driver{
+    opacity:0;
+    transform:translateY(20px);
+
+    animation:showDriver .8s forwards;
+}
+
+.driver:nth-child(1){
+    animation-delay:.2s;
+}
+
+.driver:nth-child(2){
+    animation-delay:.5s;
+}
+
+@keyframes showDriver{
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.red{
+    filter:drop-shadow(0 0 10px rgba(255,0,0,.4));
+    transition:.5s;
+}
+
+.red:hover{
+    filter:
+        drop-shadow(0 0 15px rgba(255,0,0,.6))
+        drop-shadow(0 0 30px rgba(255,0,0,.4));
+}
+
+
+
+
+
+</style>
+<body>
+     <div class="home">
+    <nav class="one">
+    <a class="navbar-brand" href="#"><img src="{% static 'formula.png' %}" width="80px"></a>
+      <ol id="navList">
+        <li class="ss"><a href="{% url 'index' %}">Home</a></li>
+        <li class="s"><a href="{% url 'second' %}">Schedule</a></li>
+        <li class="dd"><a href="{% url 'drive' %}">Drivers</a></li>
+        <li class="t"><a href="{% url 'team' %}">Teams</a></li>
+        <li class="mm"><a href="{% url 'membership' %}">F1 Membership</a></li>
+      </ol>
+
+      <div class="mobile-actions">
+      <div class="button" id="navButton">
+
+{% if user.is_authenticated %}
+
+    <a href="{% url 'logout' %}">
+        <button class="bb" type="button">Logout</button>
+    </a>
+
+{% else %}
+
+    <a href="{% url 'login' %}"> 
+        <button class="bb" type="button">Login</button>
+    </a>
+
+{% endif %}
+
+</div>
+
+<button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
+      </div>
+
+    </nav>
+   </div> 
+
+
+      <div class="title">
+    <h2>F1 Driver Lineup 2026</h2>
+    <h5 class="book">Find the current Formula 1 teams for the 2026 season</h5>
+   </div>
+<br>
+<div class="right">
+    <div class="card">
+      <a href="https://www.formula1.com/en/teams/ferrari">
+      <div class="link" style="color:whitesmoke; padding-left: 10px; font-family:Enriqueta; font-size: 20px;">
+       <h3>Ferrari</h3>
+    <div class="drivers">
+        <div class="driver">
+        <img src="{% static 'lh.avif' %}" class="avatar">
+        <br>
+        <span> Lewis<b> HAMILTON</b></span>
+        </div>
+
+      <div class="driver">
+        <img src="{% static 'chalec.avif' %}" class="avatar">
+        <br>
+        <span>Charles <b>LECLERC</b></span>
+      </div>
+    </div> 
+
+      <div class="img">
+        <img src="{% static 'fr.png' %}"  width="650px" style="margin-left: 100px; margin-top: 130px;">
+      </div>
+      </div>
+      </a>
+    </div>
+
+
+        <div class="merc">
+      <a href="https://www.formula1.com/en/teams/mercedes">
+      <div class="link" style="color:whitesmoke; padding-left: 10px; font-family:Enriqueta; font-size: 20px;">
+       <h3><Fieldset>Mercedes</Fieldset></h3>
+    <div class="drivers">
+        <div class="driver">
+        <img src="{% static 'russal.png' %}" class="avatar">
+        <br>
+        <span>George<b> RUSSELL</b></span>
+        </div>
+
+      <div class="driver">
+        <img src="{% static 'kam2.png' %}" class="avatar">
+        <br>
+        <span>Kimi <b>ANTONELLI</b></span>
+      </div>
+    </div> 
+
+      <div class="i">
+        <img src="{% static 'mer.png' %}" width="610px" style="margin-left: 30px; margin-top: 30px;">
+      </div>
+      </div>
+      </a>
+    </div>
+</div>
+<br>
+<br>
+
+<div class="right">
+    <div class="mcl">
+      <a href="https://www.formula1.com/en/teams/mclaren">
+      <div class="link" style="color:whitesmoke; padding-left: 10px; font-family:Enriqueta; font-size: 20px;">
+       <h3><Fieldset>McLaren</Fieldset></h3>
+    <div class="drivers">
+        <div class="driver">
+        <img src="{% static 'lando.png' %}" class="avatar">
+        <br>
+        <span>Lando<b> NORRIS</b></span>
+        </div>
+
+      <div class="driver">
+        <img src="{% static 'osc1.avif' %}" class="avatar">
+        <br>
+        <span>Oscar <b>PIASTRI</b></span>
+      </div>
+    </div> 
+
+      <div class="img">
+        <img src="{% static 'mc.png' %}"  width="650px" style="margin-left:80px; margin-top:130px;" >
+      </div>
+      </div>
+      </a>
+    </div>
+
+
+
+    <div class="rr">
+      <a href="https://www.formula1.com/en/teams/red-bull-racing">
+      <div class="link" style="color:whitesmoke; padding-left: 10px; font-family:Enriqueta; font-size: 20px;">
+       <h3><Fieldset>Red Bull Racing</Fieldset></h3>
+    <div class="drivers">
+        <div class="driver">
+        <img src="{% static 'max.avif' %}" class="avatar">
+        <br>
+        <span> Max<b> VERSTAPPEN</b></span>
+        </div>
+
+      <div class="driver">
+        <img src="{% static 'isahad2.png' %}" class="avatar">
+        <br>
+        <span>Isack <b>HADJAR</b></span>
+      </div>
+    </div> 
+
+      <div class="img">
+        <img src="{% static 'rr.png' %}" width="650px" style="margin-left: 100px; margin-top: 130px;">
+      </div>
+      </div>
+      </a>
+    </div>
+</div>
+<br>
+<br>
+
+<div class="right">
+    <div class="alp">
+      <a href="https://www.formula1.com/en/teams/alpine">
+      <div class="link" style="color:whitesmoke; padding-left: 10px; font-family:Enriqueta; font-size: 20px;">
+       <h3><Fieldset>Alpine</Fieldset></h3>
+    <div class="drivers">
+        <div class="driver">
+        <img src="{% static 'piegas.avif' %}" class="avatar">
+        <br>
+        <span>Pierre<b> GASLY</b></span>
+        </div>
+
+      <div class="driver">
+        <img src="{% static 'franco.avif' %}" class="avatar">
+        <br>
+        <span>Franco <b>COLAPINTO</b></span>
+      </div>
+    </div> 
+
+      <div class="img">
+        <img src="{% static 'alpi.png' %}"  width="650px" style="margin-left: 100px; margin-top: 130px;">
+      </div>
+      </div>
+      </a>
+    </div>
+
+
+    <div class="rb">
+      <a href="https://www.formula1.com/en/teams/racing-bulls">
+      <div class="link" style="color:whitesmoke; padding-left: 10px; font-family:Enriqueta; font-size: 20px;">
+       <h3><Fieldset>Racing Bulls</Fieldset></h3>
+    <div class="drivers">
+        <div class="driver">
+        <img src="{% static 'lawson.avif' %}" class="avatar">
+        <br>
+        <span> Liam<b> LAWSON</b></span>
+        </div>
+
+      <div class="driver">
+        <img src="{% static 'arivd.png' %}" class="avatar">
+        <br>
+        <span>Arvid <b>LINDBLAD</b></span>
+      </div>
+    </div> 
+
+      <div class="img">
+        <img src="{% static 'rb.png' %}"   width="650px" style="margin-left: 100px; margin-top: 130px;">
+      </div>
+      </div>
+      </a>
+    </div>
+</div>
+<br>
+<br>
+<div class="right">
+    <div class="hass">
+      <a href="https://www.formula1.com/en/teams/haas">
+      <div class="link" style="color:whitesmoke; padding-left: 10px; font-family:Enriqueta; font-size: 20px;">
+       <h3><Fieldset>Haas F1 Team</Fieldset></h3>
+    <div class="drivers">
+        <div class="driver">
+        <img src="{% static 'oco01.avif' %}" class="avatar">
+        <br>
+        <span> Esteban<b> OCON</b></span>
+        </div>
+
+      <div class="driver">
+        <img src="{% static 'olibea.avif' %}" class="avatar">
+        <br>
+        <span>Oliver <b>BEARMAN</b></span>
+      </div>
+    </div> 
+
+      <div class="img">
+        <img src="{% static 'hass.png' %}"  width="650px" style="margin-left: 100px; margin-top: 130px;">
+      </div>
+      </div>
+      </a>
+    </div>
+
+
+    <div class="will">
+      <a href="https://www.formula1.com/en/teams/williams">
+      <div class="link" style="color:whitesmoke; padding-left: 10px; font-family:Enriqueta; font-size: 20px;">
+       <h3><Fieldset>Williams</Fieldset></h3>
+    <div class="drivers">
+        <div class="driver">
+        <img src="{% static 'carsai.avif' %}" class="avatar">
+        <br>
+        <span> Carlos<b> SAINZ</b></span>
+        </div>
+
+      <div class="driver">
+        <img src="{% static 'alealb.avif' %}" class="avatar">
+        <br>
+        <span>Alexander <b>ALBON</b></span>
+      </div>
+    </div> 
+
+      <div class="img">
+        <img src="{% static 'will.png' %}"  width="650px" style="margin-left: 100px; margin-top: 130px;">
+      </div>
+      </div>
+      </a>
+    </div>
+</div>
+<br>
+<br>
+
+<div class="right">
+    <div class="audi">
+      <a href="https://www.formula1.com/en/teams/audi">
+      <div class="link" style="color:whitesmoke; padding-left: 10px; font-family:Enriqueta; font-size: 20px;">
+       <h3><Fieldset>Audi</Fieldset></h3>
+    <div class="drivers">
+        <div class="driver">
+        <img src="{% static 'nico.png' %}" class="avatar">
+        <br>
+        <span> Nico<b> HULKENBERG</b></span>
+        </div>
+
+      <div class="driver">
+        <img src="{% static 'Gabriel.png' %}" class="avatar">
+        <br>
+        <span>Gabriel <b>BORTOLETO</b></span>
+      </div>
+    </div> 
+
+      <div class="img">
+        <img src="{% static 'audi.png' %}"   width="650px" style="margin-left: 100px; margin-top: 130px;">
+      </div>
+      </div>
+      </a>
+    </div>
+
+
+    <div class="am">
+      <a href="https://www.formula1.com/en/teams/aston-martin">
+      <div class="link" style="color:whitesmoke; padding-left: 10px; font-family:Enriqueta; font-size: 20px;">
+       <h3><Fieldset>Aston Martin</Fieldset></h3>
+    <div class="drivers">
+        <div class="driver">
+        <img src="{% static 'alonson.avif' %}" class="avatar">
+        <br>
+        <span> NicoFernando<b> ALONSO</b></span>
+        </div>
+
+      <div class="driver">
+        <img src="{% static 'stroll.avif' %}" class="avatar">
+        <br>
+        <span>Lance <b>LANCE</b></span>
+      </div>
+    </div> 
+
+      <div class="img">
+        <img src="{% static 'am.png' %}"   width="650px" style="margin-left: 100px; margin-top: 130px;">
+      </div>
+      </div>
+      </a>
+    </div>
+</div>
+<br>
+<br>
+<div class="right">
+    <div class="cad">
+      <a href="https://www.formula1.com/en/teams/cadillac">
+      <div class="link" style="color:whitesmoke; padding-left: 10px; font-family:Enriqueta; font-size: 20px;">
+       <h3><Fieldset>Cadillac</Fieldset></h3>
+    <div class="drivers">
+        <div class="driver">
+        <img src="{% static 'abab.png' %}" class="avatar">
+        <br>
+        <span> Sergio<b> PEREZ</b></span>
+        </div>
+
+      <div class="driver">
+        <img src="{% static 'qqqq.png' %}" class="avatar">
+        <br>
+        <span>Valtteri <b>BOTTAS</b></span>
+      </div>
+    </div> 
+
+      <div class="img">
+        <img src="{% static 'cad.png' %}"   width="650px" style="margin-left: 100px; margin-top: 130px;">
+      </div>
+      </div>
+      </a>
+    </div>
+</div>
+<br>
+<br>
+
+<div class="red">
+<h1>2026 F1 DRIVERS</h1>
+<h5>Check out this season's official F1 line-up by following your favourite F1 drivers on and off the track.
+</h5>
+</div>
+<br>
+
+   <div class="red-line"></div>
+<br>
+<div class="foot">
+  <div class="paper">
+    <h2 class="co" style="color:#ADD8E6;">CO-PARTNERS</h2>
+  </div>
+ 
+<div class="ll">
+  <a class="lu" href="https://www.lvmh.com/en"><h3>Lvmh</h3></a>
+  <a class="pi" href="https://www.pirelli.com/tyres/en-ww/motorsport/car/formula-1?utm_source=formula1.com&utm_medium=referral&utm_campaign=ww_motorsport_f1&utm_content=homepage"><h3>Pirelli</h3></a>
+  <a class="ar" href="https://www.aramco.com/"><h3>Aramco</h3></a>
+  <a class="he" href="https://www.heineken.com/in/en/agegateway/?returnUrl=%2fin%2fen%2fhome"><h3>Heineken</h3></a>
+  <a class="le" href="https://www.lenovo.com/in/en/"><h3>Lenovo</h3></a>
+  <a class="pu" href="https://eu.puma.com/de/en/sports/motorsport?utm_source=PP&utm_pricing=OTH&utm_medium=BM&utm_campaign=BM_All_PP_OTH_OTH_BRD_Motorsport_SS23_Formula1_F1-Website_NA_NA&utm_budget=global"><h3>Puma</h3></a>
+</div>
+<div id="red"></div>
+</div>
+
+<div class="middle">
+  <div class="louis"><a href="https://in.louisvuitton.com/eng-in/homepage"><img src="{% static 'lv.png' %}" width="100px" height="auto"></a></div>
+  <div class="nest"><a href="https://www.nestle.com/"><img src="{% static 'ns.png' %}" width="100px" height="100px"></a></div>
+  <div class="tmobile"><a href="https://www.t-mobile.com/?msockid=3653e332c6246f2b3f74f523c7e36e69"><img src="{% static 'tm.webp' %}" width="100px" height="50px"></a></div>
+  <div class="sf"><a href="https://www.salesforce.com/in/?ir=1"><img src="{% static 'sf.png' %}" width="100px" height="100px"></a></div>
+  
+</div>
+
+<script>
+$(document).ready(function () {
+  const $toggle = $('#menuToggle');
+  const $navList = $('#navList');
+
+  $toggle.on('click', function () {
+    $toggle.toggleClass('active');
+    $navList.toggleClass('show');
+    $('body').toggleClass('menu-open');
+  });
+
+  $navList.find('a').on('click', function () {
+    $toggle.removeClass('active');
+    $navList.removeClass('show');
+    $('body').removeClass('menu-open');
+  });
+});
+</script>
+</body>
+</html>
